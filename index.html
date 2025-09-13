@@ -141,6 +141,22 @@ footer{padding-block:clamp(20px,3.2vw,28px);border-top:1px solid var(--line);bac
   .grid-hero{grid-template-columns:1fr}
   .btn{width:100%}
 }
+/* Узор: сетка */
+body::before {
+  content:"";
+  position:fixed; inset:0;
+  z-index:-2;
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+/* Чтобы фоновые элементы перекрывали круг */
+.paper, .card, header, footer {
+  position:relative;
+  z-index:1;
+  background:#fff;
+}
 </style>
 </head>
 <body>
@@ -151,6 +167,11 @@ footer{padding-block:clamp(20px,3.2vw,28px);border-top:1px solid var(--line);bac
 <div class="progress" id="progress"></div>
 
 <header>
+  <!-- Синий круг за курсором -->
+<div class="mouse-orb" id="mouseOrb">
+  <div class="o o1"></div>
+  <div class="o o2"></div>
+</div>
   <div class="container nav">
     <a href="#hero" class="brand" aria-label="NEBULA IT">
       <svg viewBox="0 0 36 36" width="36" height="36" aria-hidden="true">
@@ -413,6 +434,26 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
 </div>
 
 <script>
+(function(){
+  const st = document.getElementById('mouseOrb').style;
+  let tx = innerWidth * 0.5, ty = innerHeight * 0.22;
+  let x = tx, y = ty;
+  const lerp = (a,b,t)=>a+(b-a)*t;
+
+  addEventListener('pointermove', e=>{
+    tx = e.clientX;
+    ty = e.clientY;
+  }, {passive:true});
+
+  function loop(){
+    x = lerp(x, tx, 0.12);
+    y = lerp(y, ty, 0.12);
+    st.setProperty('--x', x+'px');
+    st.setProperty('--y', y+'px');
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
 /* сетка и параллакс */
 (function(){
   const c=document.getElementById('grid');
