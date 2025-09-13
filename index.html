@@ -2,145 +2,614 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-  <title>NEBULA IT — Консалтинг и разработка</title>
-  <meta name="description" content="Цифровые продукты для бизнеса: аналитика, веб-приложения, интеграции, AI."/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>NEBULA IT — создаём измеримый цифровой эффект</title>
+  <meta name="description" content="NEBULA IT — стратегический партнёр по цифровым продуктам и AI. Скорость. Измеримость. Безопасность."/>
+  <meta property="og:title" content="NEBULA IT — создаём измеримый цифровой эффект"/>
+  <meta property="og:description" content="Стратегический партнёр по цифровым продуктам и AI. Прозрачные процессы. Гарантированные SLA."/>
+  <meta property="og:image" content="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop"/>
+  <meta name="color-scheme" content="light"/>
   <style>
     :root{
-      --bg:#f5f7fb; --paper:#ffffff; --ink:#0f172a; --mut:#5b6472; --line:#e6e9f0;
-      --acc:#2563eb; --acc2:#0ea5e9; --br:14px;
+      --bg:#f5f7fb; --paper:#fff; --ink:#0f172a; --mut:#5b6472; --line:#e6e9f0;
+      --acc:#2563eb; --acc2:#0ea5e9; --ok:#16a34a; --warn:#d97706; --err:#dc2626;
+      --r-xs:8px; --r-sm:10px; --r-md:12px; --r-lg:14px; --shadow:0 12px 28px rgba(10,18,40,.06);
+      --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px; --space-8:32px;
+      --container:1200px;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{background:var(--bg);color:var(--ink);font-family:Inter,sans-serif;scroll-snap-type:y mandatory;scroll-behavior:smooth}
-    section{min-height:100vh;scroll-snap-align:start;display:flex;align-items:center;padding:64px 0}
-    .container{max-width:1200px;margin:0 auto;padding:0 16px}
+    html,body{height:100%;}
+    html{scroll-behavior:smooth;}
+    body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/24px Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--container);margin-inline:auto;padding-inline:16px}
 
-    h1{font-size:clamp(24px,5vw,48px);line-height:1.2;margin-bottom:12px}
-    h2{font-size:clamp(20px,4vw,32px);margin-bottom:8px}
-    h3{font-size:clamp(18px,3vw,24px);margin:6px 0}
-    p{line-height:1.5;margin:6px 0}
-
-    header{position:sticky;top:0;z-index:1000;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-    .nav{display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
-    .menu{display:flex;flex-wrap:wrap;gap:10px}
-    .menu a{color:var(--mut);font-weight:500;position:relative;padding:4px 8px;border-radius:6px;transition:.2s}
-    .menu a:hover{color:var(--acc);background:rgba(37,99,235,.08)}
-    .menu a.active{color:var(--acc);background:rgba(37,99,235,.12)}
-
-    .btn{display:inline-block;padding:12px 20px;border-radius:10px;font-weight:600;text-align:center;cursor:pointer;transition:.2s}
-    .btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
-    .btn.primary:hover{opacity:.9}
-    .btn.outline{border:2px solid var(--acc);color:var(--acc);background:#fff}
+    /* Навигация */
+    .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.2) blur(8px);background:color-mix(in oklab, var(--paper) 86%, transparent);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;height:64px;padding-inline:16px}
+    .brand{display:flex;align-items:center;gap:12px;white-space:nowrap}
+    .brand strong{letter-spacing:.02em;font-weight:700}
+    .menu{display:flex;align-items:center;gap:6px;flex:1;justify-content:center}
+    .menu a{padding:8px 12px;border-radius:999px;color:var(--mut);font-weight:500}
+    .menu a.active{background:rgba(37,99,235,.12);color:var(--acc)}
+    .btn{height:44px;padding:12px 18px;border-radius:12px;border:0;cursor:pointer;font-weight:600}
+    .btn:focus-visible{outline:2px solid #93C5FD;outline-offset:2px}
+    .btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:var(--shadow)}
+    .btn.secondary{background:#0f172a;color:#fff}
+    .btn.outline{background:transparent;border:1px solid var(--acc);color:var(--acc)}
     .btn.outline:hover{background:var(--acc);color:#fff}
 
-    .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;transition:transform .2s}
-    .card:hover{transform:translateY(-3px)}
+    /* Секции и снап */
+    main{scroll-snap-type:y proximity}
+    section{scroll-snap-align:start;min-height:100vh;display:grid;place-items:center;border-bottom:1px solid var(--line)}
+    .section-inner{width:100%;max-width:var(--container);padding:48px 16px}
 
-    .partners{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-top:16px}
-    .partner{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:80px}
-    .partner img{max-width:100%;max-height:40px;object-fit:contain;filter:grayscale(100%);opacity:.8;transition:.3s}
-    .partner img:hover{filter:none;opacity:1}
+    /* Типографика */
+    h1{font-weight:700;font-size:clamp(28px,4vw,44px);line-height:clamp(36px,5vw,52px);letter-spacing:-.01em;margin:0 0 16px}
+    h2{font-weight:700;font-size:clamp(22px,3vw,32px);line-height:clamp(30px,4vw,40px);margin:0 0 16px}
+    h3{font-weight:600;font-size:22px;line-height:30px;margin:0 0 8px}
+    p{margin:0 0 12px}
+    .mut{color:var(--mut)}
 
-    .faq details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;cursor:pointer}
-    .faq summary{font-weight:600}
-    .faq summary::after{content:"➤";float:right;transition:.2s}
-    .faq[open] summary::after{transform:rotate(90deg)}
+    /* Hero */
+    #hero{background:radial-gradient(1200px 600px at 50% -10%, rgba(37,99,235,.10), transparent 60%), var(--bg)}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}
+    .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+    .code-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:16px}
+    .kpi{display:flex;gap:16px;margin-top:16px}
+    .kpi .item{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+    .down{display:inline-flex;align-items:center;gap:8px;color:var(--mut);margin-top:8px}
+    .down svg{animation:bounce 1.4s infinite}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+    @media (prefers-reduced-motion: reduce){.down svg{animation:none}}
 
-    .scrollHint{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:900;animation:bounce 1.5s infinite}
-    .scrollHint button{border:none;background:var(--acc);color:#fff;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.15)}
-    @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
+    /* Блоки */
+    .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;transition:transform .2s cubic-bezier(.22,.61,.36,1), box-shadow .2s cubic-bezier(.22,.61,.36,1)}
+    .card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
 
-    @media(max-width:768px){
-      .grid-2,.grid-3{grid-template-columns:1fr!important}
-      header .menu{gap:6px}
-      .menu a{font-size:14px;padding:3px 6px}
-    }
+    /* О компании */
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+
+    /* Услуги */
+    .service-card .cta{display:flex;gap:8px;margin-top:8px}
+    .timeline{display:flex;gap:16px;margin-top:16px}
+    .timeline .step{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px}
+
+    /* Проекты */
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+    .tag{padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--mut);cursor:pointer}
+    .tag.active{background:rgba(37,99,235,.12);color:var(--acc);border-color:transparent}
+    .shots{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .shots img{border-radius:12px;border:1px solid var(--line)}
+    .info-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+
+    /* Аналитика */
+    .charts{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+    .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .controls input[type=range]{width:220px}
+
+    /* Документация */
+    .doc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+
+    /* Партнёры */
+    .logo-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;align-items:center}
+    .logo{border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:14px;display:grid;place-items:center;filter:grayscale(1);opacity:.9;transition:filter .2s, opacity .2s}
+    .logo:hover{filter:none;opacity:1}
+
+    /* FAQ */
+    details{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px}
+    details + details{margin-top:12px}
+
+    /* Формы */
+    .field{display:grid;gap:6px}
+    input,textarea,select{height:44px;border-radius:10px;border:1px solid var(--line);padding:10px 12px;font:inherit;background:#fff}
+    textarea{height:120px;resize:vertical}
+    input:focus,textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px rgba(37,99,235,.2)}
+    .err{color:var(--err);font-size:14px}
+
+    /* Модалка */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center}
+    .modal[open]{display:flex}
+    .overlay{position:absolute;inset:0;background:rgba(15,23,42,.35)}
+    .dialog{position:relative;background:var(--paper);border-radius:14px;max-width:720px;width:clamp(320px,90vw,720px);border:1px solid var(--line);padding:20px}
+
+    /* Футер */
+    footer{background:#0b1224;color:#e6ecff}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:16px}
+    .up{position:fixed;right:16px;bottom:16px}
+
+    /* Мобайл */
+    @media (max-width:1200px){.grid-4{grid-template-columns:repeat(3,1fr)}.logo-grid{grid-template-columns:repeat(4,1fr)}.doc-grid{grid-template-columns:repeat(3,1fr)}.charts{grid-template-columns:1fr}}
+    @media (max-width:992px){.hero-grid{grid-template-columns:1fr}.grid-3{grid-template-columns:repeat(2,1fr)}.shots{grid-template-columns:repeat(2,1fr)}.info-cards{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:1fr 1fr 1fr}}
+    @media (max-width:768px){.menu{flex-wrap:wrap;gap:4px}.nav{height:56px}.grid-4,.grid-3,.grid-2{grid-template-columns:1fr}.logo-grid{grid-template-columns:repeat(3,1fr)}.shots{grid-template-columns:1fr}.info-cards{grid-template-columns:1fr}.doc-grid{grid-template-columns:1fr 1fr}}
+    @media (max-width:640px){.logo-grid{grid-template-columns:repeat(2,1fr)}.doc-grid{grid-template-columns:1fr}}
   </style>
+  <!-- Schema.org -->
+  <script type="application/ld+json">{
+    "@context":"https://schema.org","@type":"Organization","name":"NEBULA IT","url":"https://nebula.example","logo":"/favicon.svg","slogan":"Создаём измеримый цифровой эффект","sameAs":["https://t.me/nebula","https://github.com/nebula"],"department":{"@type":"WebSite","name":"NEBULA IT","url":"https://nebula.example","potentialAction":{"@type":"SearchAction","target":"https://nebula.example/?q={search_term_string}","query-input":"required name=search_term_string"}}}
+  </script>
 </head>
 <body>
-  <header>
-    <div class="nav">
-      <div class="brand">NEBULA IT</div>
-      <nav class="menu">
-        <a href="#hero">Главная</a>
-        <a href="#about">О компании</a>
-        <a href="#services">Услуги</a>
-        <a href="#cases">Проекты</a>
-        <a href="#analytics">Аналитика</a>
-        <a href="#docs">Документация</a>
-        <a href="#partners">Партнёры</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-      <button class="btn primary">Связаться</button>
-    </div>
-  </header>
+<header class="nav" role="navigation" aria-label="Главное меню">
+  <a class="brand" href="#hero" aria-label="На главную">
+    <svg viewBox="0 0 36 36" width="28" height="28" aria-hidden="true">
+      <defs>
+        <linearGradient id="g" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" stop-color="#2563eb"/>
+          <stop offset="1" stop-color="#0ea5e9"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="36" height="36" rx="10" fill="url(#g)"/>
+      <path d="M18 9 L19.8 15.2 L26 17 L19.8 18.8 L18 25 L16.2 18.8 L10 17 L16.2 15.2 Z" fill="#0f172a"/>
+      <path d="M28 22a10 10 0 1 1-6-12" fill="none" stroke="#0f172a" stroke-width="2" opacity=".4"/>
+    </svg>
+    <strong>NEBULA IT</strong>
+  </a>
+  <nav class="menu">
+    <a href="#hero" class="active">Главная</a>
+    <a href="#about">О компании</a>
+    <a href="#services">Услуги</a>
+    <a href="#cases">Проекты</a>
+    <a href="#analytics">Аналитика</a>
+    <a href="#docs">Документация</a>
+    <a href="#partners">Партнёры</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <button class="btn primary" data-open="brief">Связаться</button>
+</header>
 
-  <section id="hero">
-    <div class="container">
-      <h1>Цифровые продукты с измеримым эффектом</h1>
-      <p>Мы проектируем и внедряем решения в FinTech, e-commerce и B2B. Показываем прогресс по метрикам и прозрачный бэклог.</p>
-      <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
-        <button class="btn primary">Заполнить бриф</button>
-        <a class="btn outline" href="#services">Смотреть услуги</a>
+<main id="main">
+  <!-- Hero -->
+  <section id="hero" aria-label="Hero">
+    <div class="section-inner hero-grid">
+      <div>
+        <h1>Проектируем и запускаем цифровые продукты</h1>
+        <p class="mut">Считаем экономический эффект каждого релиза. Прозрачный бэклог. Гарантированные SLA.</p>
+        <div class="hero-cta">
+          <button class="btn primary" data-open="brief" data-analytics="cta_primary_click">Заполнить бриф</button>
+          <a class="btn outline" href="#services">Смотреть услуги</a>
+          <a class="btn secondary" href="#analytics">AI-пилот</a>
+        </div>
+        <div class="kpi" role="list">
+          <div class="item" role="listitem"><strong>p95 240 мс</strong><p class="mut">в проде</p></div>
+          <div class="item" role="listitem"><strong>99.5% SLA</strong><p class="mut">аптайм</p></div>
+          <div class="item" role="listitem"><strong>−38%</strong><p class="mut">ручных операций</p></div>
+        </div>
+        <a class="down" href="#about" aria-label="К разделу О компании">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          Вниз
+        </a>
+      </div>
+      <div class="code-card" aria-label="Пример кода">
+        <pre aria-live="polite" style="margin:0;font:600 14px/20px 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;">
+fetch('/api/release', { method: 'POST', body: JSON.stringify({
+  feature: 'AI-assistant', rollout: '5%'
+})}).then(r => r.json()).then(({ effect }) => {
+  console.info('Измеримый эффект:', effect)
+})
+        </pre>
       </div>
     </div>
   </section>
 
-  <section id="about">
-    <div class="container">
+  <!-- About -->
+  <section id="about" aria-label="О компании">
+    <div class="section-inner">
       <h2>О компании</h2>
-      <p>NEBULA IT — агентство цифровых продуктов. Мы специализируемся на аналитике, веб-разработке и интеграциях. Работаем с компаниями в России и за рубежом. Наша цель — экономический эффект и прозрачность процессов.</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Миссия</h3>
+          <p>Ускоряем принятие решений. Снижаем ручной труд. Доставляем измеримый эффект.</p>
+        </div>
+        <div class="card">
+          <h3>Принципы</h3>
+          <p>Эффект важнее фич. Прозрачные процессы. Безопасность по умолчанию. Права у заказчика.</p>
+        </div>
+      </div>
+      <div class="grid-4" style="margin-top:16px">
+        <div class="card"><h3>Компетенции</h3><p class="mut">Веб-приложения, интеграции, ETL, отчётность, AI-ассистенты, RAG, чат-интерфейсы, мониторинг.</p></div>
+        <div class="card"><h3>Соответствие</h3><p class="mut">Политика ПДн. RBAC. Журналы аудита. SLA/OLA. Постмортемы.</p></div>
+        <div class="card"><h3>Ценности</h3><p class="mut">Скорость. Измеримость. Прозрачность. Безопасность.</p></div>
+        <div class="card"><h3>Сверка</h3><p class="mut">Еженедельные демо. KPI на доске. Общий бэклог.</p></div>
+      </div>
     </div>
   </section>
 
-  <section id="partners">
-    <div class="container">
+  <!-- Services -->
+  <section id="services" aria-label="Услуги">
+    <div class="section-inner">
+      <h2>Услуги</h2>
+      <div class="grid-3">
+        <div class="card service-card">
+          <h3>Discovery & Стратегия</h3>
+          <p class="mut">От гипотез до дорожной карты с ROI и рисками.</p>
+          <div class="cta"><button class="btn outline" data-open="brief">Заказать аудит</button><a class="btn secondary" href="#docs">Документы</a></div>
+        </div>
+        <div class="card service-card">
+          <h3>Проектирование & UX</h3>
+          <p class="mut">CJMs, прототипы, исследование, тесты на пользователях.</p>
+          <div class="cta"><button class="btn outline" data-open="brief">Связаться</button><a class="btn secondary" href="#cases">Кейсы</a></div>
+        </div>
+        <div class="card service-card">
+          <h3>Разработка & DevOps</h3>
+          <p class="mut">Веб, интеграции, ETL, мониторинг, SLO, IaC.</p>
+          <div class="cta"><button class="btn outline" data-open="brief">Связаться</button><a class="btn secondary" href="#analytics">Аналитика</a></div>
+        </div>
+        <div class="card service-card">
+          <h3>AI‑ассистенты и RAG</h3>
+          <p class="mut">Чат‑интерфейсы, приватные вектора, аудит качества ответов.</p>
+          <div class="cta"><button class="btn outline" data-open="brief">AI-пилот</button><a class="btn secondary" href="#docs">Политика данных</a></div>
+        </div>
+        <div class="card service-card">
+          <h3>Интеграции & CRM</h3>
+          <p class="mut">API, вебхуки, очереди, биллинг, отчётность.</p>
+          <div class="cta"><button class="btn outline" data-open="brief">Связаться</button><a class="btn secondary" href="#partners">Партнёры</a></div>
+        </div>
+        <div class="card service-card">
+          <h3>Поддержка & SRE</h3>
+          <p class="mut">Дежурства, алерты, постмортемы, непрерывное улучшение.</p>
+          <div class="cta"><button class="btn outline" data-open="brief">Связаться</button><a class="btn secondary" href="#faq">FAQ</a></div>
+        </div>
+      </div>
+      <div class="timeline" aria-label="Таймлайн из 3 шагов">
+        <div class="step"><strong>1. Диагностика</strong><p class="mut">Данные, цели, ограничения. 3–5 дней.</p></div>
+        <div class="step"><strong>2. MVP/Пилот</strong><p class="mut">Релиз за 2–4 недели. Измеряем эффект.</p></div>
+        <div class="step"><strong>3. Масштаб</strong><p class="mut">SLA, бэклог, SLO, отчётность.</p></div>
+      </div>
+      <p class="mut" style="margin-top:8px">От стратегии до продакшена.</p>
+    </div>
+  </section>
+
+  <!-- Cases -->
+  <section id="cases" aria-label="Проекты">
+    <div class="section-inner">
+      <h2>Проекты</h2>
+      <div class="tags" role="tablist" aria-label="Фильтры кейсов">
+        <button class="tag active" role="tab" aria-selected="true" data-filter="all">Все</button>
+        <button class="tag" role="tab" data-filter="ai">AI</button>
+        <button class="tag" role="tab" data-filter="crm">CRM</button>
+        <button class="tag" role="tab" data-filter="etl">ETL</button>
+      </div>
+      <div class="shots">
+        <img loading="lazy" data-tags="ai crm" alt="Дашборд" src="https://images.unsplash.com/photo-1551281044-8b89adc2f340?q=80&w=1600&auto=format&fit=crop"/>
+        <img loading="lazy" data-tags="etl" alt="Серверная" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1600&auto=format&fit=crop"/>
+        <img loading="lazy" data-tags="crm" alt="Интерфейс" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1600&auto=format&fit=crop"/>
+      </div>
+      <div class="info-cards">
+        <div class="card"><h3>Результат</h3><p class="mut">−38% ручных операций. +12% конверсия.</p></div>
+        <div class="card"><h3>Метрики</h3><p class="mut">p95 240 мс. 99.5% SLA.</p></div>
+        <div class="card"><h3>Риски</h3><p class="mut">Бек‑офис, права доступа, деградации по расписанию.</p></div>
+        <div class="card"><h3>Архитектура</h3><p class="mut">API‑шлюзы, очереди, RAG‑индекс.</p></div>
+        <div class="card"><h3>Команда</h3><p class="mut">PM, UX, 3 Dev, SRE, Аналитик.</p></div>
+        <div class="card"><h3>Документы</h3><p class="mut">ТЗ, RFC, чек‑лист релиза.</p></div>
+      </div>
+      <div class="card" style="margin-top:16px"><strong>N запусков</strong> • <strong>99.5% SLA</strong> • <strong>p95 240 мс</strong></div>
+    </div>
+  </section>
+
+  <!-- Analytics -->
+  <section id="analytics" aria-label="Аналитика">
+    <div class="section-inner">
+      <h2>Аналитика</h2>
+      <div class="charts">
+        <div class="card">
+          <svg id="chart" viewBox="0 0 600 300" role="img" aria-label="Линия и столбцы">
+            <rect x="0" y="0" width="600" height="300" fill="#fff" rx="12"/>
+            <g id="grid" stroke="#EEF2F7" stroke-width="1">
+              <path d="M40 40H580"/><path d="M40 90H580"/><path d="M40 140H580"/><path d="M40 190H580"/><path d="M40 240H580"/>
+              <path d="M40 40V260"/>
+            </g>
+            <g id="bars" fill="url(#barGrad)"></g>
+            <defs>
+              <linearGradient id="lineGrad" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="#2563eb"/>
+                <stop offset="1" stop-color="#0ea5e9"/>
+              </linearGradient>
+              <linearGradient id="barGrad" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="#2563eb" stop-opacity=".6"/>
+                <stop offset="1" stop-color="#0ea5e9" stop-opacity=".9"/>
+              </linearGradient>
+            </defs>
+            <path id="line" d="" fill="none" stroke="url(#lineGrad)" stroke-width="3"/>
+          </svg>
+          <p class="mut" id="chart-desc" style="margin-top:8px">Линия — конверсия. Столбцы — трафик. Значения реагируют на ползунки.</p>
+        </div>
+        <div class="card">
+          <h3>Параметры</h3>
+          <div class="controls" role="group" aria-label="Настройки графика">
+            <label>Трафик <input type="range" min="50" max="300" value="180" id="rTraffic"/></label>
+            <label>Конверсия % <input type="range" min="1" max="20" value="8" id="rCR"/></label>
+            <button class="btn outline" id="resetChart">Сброс</button>
+          </div>
+          <svg id="donut" viewBox="0 0 200 200" width="200" height="200" aria-label="Кольцевая диаграмма" style="margin-top:12px"></svg>
+        </div>
+      </div>
+      <p class="mut" style="margin-top:8px">Правила чтения: смотрите тренд по линии и несоответствия по столбцам. Кнопка «Сброс» возвращает эталон.</p>
+    </div>
+  </section>
+
+  <!-- Docs -->
+  <section id="docs" aria-label="Документация">
+    <div class="section-inner">
+      <h2>Документация</h2>
+      <div class="doc-grid">
+        <div class="card"><h3>API</h3><p class="mut">Контракты, лимиты, SLA. <button class="btn outline" data-open="api">Открыть</button></p></div>
+        <div class="card"><h3>Инфраструктура</h3><p class="mut">CI/CD, IaC, SLO. <button class="btn outline" data-open="infra">Открыть</button></p></div>
+        <div class="card"><h3>Политика данных</h3><p class="mut">Минимизация данных. Роли доступа. Аудит.</p></div>
+        <div class="card"><h3>Юридический контур</h3><p class="mut">SLA/OLA, DPA, постмортемы. <a class="btn secondary" href="#faq">Вопросы</a></p></div>
+      </div>
+      <div style="margin-top:12px"><a class="btn primary" href="#" aria-label="Скачать whitepaper">Whitepaper</a></div>
+    </div>
+  </section>
+
+  <!-- Partners -->
+  <section id="partners" aria-label="Партнёры">
+    <div class="section-inner">
       <h2>Партнёры</h2>
-      <div class="partners">
-        <div class="partner"><img src="https://dummyimage.com/200x40/ccc/000.png&text=NorthWind" alt="NorthWind"></div>
-        <div class="partner"><img src="https://dummyimage.com/200x40/ccc/000.png&text=Volta+Cloud" alt="Volta"></div>
-        <div class="partner"><img src="https://dummyimage.com/200x40/ccc/000.png&text=Sigma+Data" alt="Sigma"></div>
-        <div class="partner"><img src="https://dummyimage.com/200x40/ccc/000.png&text=Kappa+CRM" alt="Kappa"></div>
-        <div class="partner"><img src="https://dummyimage.com/200x40/ccc/000.png&text=OmniPay" alt="OmniPay"></div>
-        <div class="partner"><img src="https://dummyimage.com/200x40/ccc/000.png&text=StreamQueue" alt="StreamQueue"></div>
+      <div class="logo-grid" role="list">
+        <div class="logo" role="listitem">NorthWind CDN</div>
+        <div class="logo" role="listitem">Volta Cloud</div>
+        <div class="logo" role="listitem">Sigma Data</div>
+        <div class="logo" role="listitem">Kappa CRM</div>
+        <div class="logo" role="listitem">OmniPay</div>
+        <div class="logo" role="listitem">StreamQueue</div>
+        <div class="logo" role="listitem">LedgerX</div>
+        <div class="logo" role="listitem">FormBee</div>
+        <div class="logo" role="listitem">MailJet</div>
+        <div class="logo" role="listitem">GeoIPX</div>
+        <div class="logo" role="listitem">AuthKit</div>
+        <div class="logo" role="listitem">ClickHouseCloud</div>
       </div>
     </div>
   </section>
 
-  <section id="faq">
-    <div class="container">
+  <!-- FAQ -->
+  <section id="faq" aria-label="FAQ">
+    <div class="section-inner">
       <h2>FAQ</h2>
-      <div class="faq">
-        <details><summary>Сколько длится запуск MVP?</summary><p>Обычно 4–8 недель, с еженедельными демо и прозрачным бэклогом.</p></details>
-        <details><summary>Есть поддержка после запуска?</summary><p>Да, SLA 8×5 или 24×7 с мониторингом и алертами.</p></details>
-        <details><summary>Как считается ROI?</summary><p>Фиксируем базовые метрики, считаем эффект каждой фичи, готовим отчёт.</p></details>
-      </div>
+      <details>
+        <summary><strong>Как быстро запустим пилот?</strong></summary>
+        <p class="mut">Обычно 2–4 недели. Сразу считаем экономический эффект.</p>
+      </details>
+      <details>
+        <summary><strong>Как оцениваем риски?</strong></summary>
+        <p class="mut">Используем риск‑реестр, ставим деградации и алерты заранее.</p>
+      </details>
+      <details>
+        <summary><strong>Кто владеет результатом?</strong></summary>
+        <p class="mut">Права у заказчика. Мы передаём весь код и артефакты.</p>
+      </details>
+      <details>
+        <summary><strong>Какие метрики качества?</strong></summary>
+        <p class="mut">SLA/SLO, p95 latency, CSAT, бизнес‑KPI.</p>
+      </details>
     </div>
   </section>
+</main>
 
-  <div class="scrollHint"><button id="scrollBtn">↓</button></div>
+<footer aria-label="Футер">
+  <div class="section-inner footer-grid">
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <svg viewBox="0 0 36 36" width="24" height="24" aria-hidden="true"><defs><linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs><rect x="0" y="0" width="36" height="36" rx="10" fill="url(#g2)"/><path d="M18 9 L19.8 15.2 L26 17 L19.8 18.8 L18 25 L16.2 18.8 L10 17 L16.2 15.2 Z" fill="#0f172a"/><path d="M28 22a10 10 0 1 1-6-12" fill="none" stroke="#0f172a" stroke-width="2" opacity=".4"/></svg>
+        <strong>NEBULA IT</strong>
+      </div>
+      <p class="mut">Создаём измеримый цифровой эффект.</p>
+    </div>
+    <div>
+      <h3>Контакты</h3>
+      <p class="mut">hello@nebula.example<br/>+7 999 000‑00‑00</p>
+    </div>
+    <div>
+      <h3>Соцсети</h3>
+      <p class="mut"><a href="#">Telegram</a><br/><a href="#">GitHub</a></p>
+    </div>
+    <div>
+      <h3>Действия</h3>
+      <button class="btn primary" data-open="brief">Связаться</button>
+    </div>
+  </div>
+</footer>
 
-  <script>
-    const slides = Array.from(document.querySelectorAll('section'));
-    const btn = document.getElementById('scrollBtn');
-    let index=0;
-    const io = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){
-        index=slides.indexOf(e.target);
-        document.querySelectorAll('.menu a').forEach(a=>a.classList.remove('active'));
-        const id = e.target.getAttribute('id');
-        const link = document.querySelector(`.menu a[href="#${id}"]`);
-        if(link) link.classList.add('active');
-      }})
-    },{threshold:.6});
-    slides.forEach(s=>io.observe(s));
-    btn.addEventListener('click',()=>{
-      const next=slides[Math.min(slides.length-1,index+1)];
-      next?.scrollIntoView({behavior:'smooth'});
+<a class="btn primary up" href="#hero" aria-label="Наверх">Вверх</a>
+
+<!-- BRIEF MODAL -->
+<dialog class="modal" id="modal-brief" aria-modal="true" aria-labelledby="brief-title" aria-describedby="brief-desc">
+  <div class="overlay" data-close></div>
+  <div class="dialog" role="document">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px">
+      <h3 id="brief-title" style="margin:0">Заполнить бриф</h3>
+      <button class="btn outline" data-close aria-label="Закрыть">Закрыть</button>
+    </div>
+    <p id="brief-desc" class="mut">Минимум два поля обязательны: имя и email.</p>
+    <form id="briefForm" novalidate>
+      <div class="grid-2">
+        <label class="field">Имя*<input name="name" autocomplete="name" required/></label>
+        <label class="field">Email*<input name="email" type="email" autocomplete="email" required/></label>
+      </div>
+      <label class="field" style="margin-top:8px">Компания<input name="company"/></label>
+      <label class="field" style="margin-top:8px">Задача<textarea name="task" placeholder="Кратко опишите бизнес‑цель"></textarea></label>
+      <div id="formError" class="err" aria-live="polite" style="min-height:20px"></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+        <button class="btn outline" type="button" data-close>Отмена</button>
+        <button class="btn primary" type="submit">Отправить</button>
+      </div>
+      <div id="formStatus" class="mut" aria-live="polite" style="margin-top:8px"></div>
+    </form>
+  </div>
+</dialog>
+
+<!-- API MODAL -->
+<dialog class="modal" id="modal-api" aria-modal="true" aria-labelledby="api-title">
+  <div class="overlay" data-close></div>
+  <div class="dialog">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px"><h3 id="api-title" style="margin:0">API</h3><button class="btn outline" data-close>Закрыть</button></div>
+    <pre style="margin:0;white-space:pre-wrap">Endpoints:
+GET /v1/health → 200 OK
+POST /v1/leads  → 201 Created
+Rate limit: 60 rpm, burst 120. SLA: 99.5%.
+Auth: OAuth2, scopes: leads:write</pre>
+  </div>
+</dialog>
+
+<!-- INFRA MODAL -->
+<dialog class="modal" id="modal-infra" aria-modal="true" aria-labelledby="infra-title">
+  <div class="overlay" data-close></div>
+  <div class="dialog">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px"><h3 id="infra-title" style="margin:0">Инфраструктура</h3><button class="btn outline" data-close>Закрыть</button></div>
+    <pre style="margin:0;white-space:pre-wrap">CI/CD: trunk‑based, canary. IaC: Terraform. Observability: traces, logs, metrics. On‑call: 24/7, p95 &lt; 300 ms.</pre>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+  const $  = (sel, ctx=document) => ctx.querySelector(sel);
+
+  // Аналитика → просто лог в консоль
+  function track(name, detail={}){ console.debug('[analytics]', name, detail); }
+
+  // Активное меню по IntersectionObserver 0.6
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = e.target.id;
+        $$('.menu a').forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+id));
+        track('slide_visible',{id});
+        history.replaceState(null, '', '#'+id);
+      }
+    })
+  },{threshold:0.6});
+  $$('main > section').forEach(s=>observer.observe(s));
+
+  // Авто-дотягивание после 120 мс простоя
+  let scrollTimer;
+  window.addEventListener('scroll', ()=>{
+    clearTimeout(scrollTimer);
+    scrollTimer=setTimeout(()=>{
+      const sections = $$('main > section');
+      const pos = window.scrollY + window.innerHeight/2;
+      const nearest = sections.reduce((a,s)=>{
+        const r = s.getBoundingClientRect();
+        const top = window.scrollY + r.top;
+        const d = Math.abs(top - pos);
+        return d < a.d ? {d, el:s} : a;
+      }, {d:1e9, el:sections[0]}).el;
+      nearest.scrollIntoView({behavior:'smooth'});
+    }, 120);
+  }, {passive:true});
+
+  // Навигационные клики
+  $$('.menu a').forEach(a=>a.addEventListener('click',()=>track('nav_click',{to:a.getAttribute('href')})));
+
+  // Тэг‑фильтры кейсов
+  $$('#cases .tag').forEach(btn=>btn.addEventListener('click',()=>{
+    $$('#cases .tag').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    $$('#cases .shots img').forEach(img=>{
+      const ok = f==='all' || (img.dataset.tags||'').includes(f);
+      img.style.display = ok ? '' : 'none';
     });
-  </script>
+  }));
+
+  // Модалки
+  function openModal(id){ const m = $('#modal-'+id); if(m){ m.setAttribute('open',''); m.querySelector('.dialog').focus?.(); track('modal_open',{id}); } }
+  function closeModal(m){ m.removeAttribute('open'); track('modal_close',{}); }
+  $$('[data-open]').forEach(el=>el.addEventListener('click',()=>{ const id = el.dataset.open; if(id==='brief') track('brief_open'); openModal(id); }));
+  $$('dialog .overlay,[data-close]').forEach(el=>el.addEventListener('click',()=>closeModal(el.closest('dialog'))));
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ $$('.modal[open]').forEach(closeModal); }});
+
+  // Бриф форма
+  const form = $('#briefForm');
+  form?.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const fd = new FormData(form);
+    const name = (fd.get('name')||'').trim();
+    const email = (fd.get('email')||'').trim();
+    const err = $('#formError');
+    err.textContent='';
+    if(!name || !email){ err.textContent='Это обязательное поле'; return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ err.textContent='Укажите корректный email'; return; }
+    const status = $('#formStatus');
+    status.textContent='Отправка…';
+    track('brief_submit',{name,email});
+    await new Promise(r=>setTimeout(r,600)); // имитация отправки
+    status.textContent='Готово. Мы свяжемся в течение рабочего дня';
+    setTimeout(()=>{ closeModal($('#modal-brief')); form.reset(); status.textContent=''; }, 1000);
+  });
+
+  // Графики: столбцы, линия, донат
+  const chart = $('#chart');
+  const bars = $('#bars');
+  const line = $('#line');
+  const donut = $('#donut');
+  const rTraffic = $('#rTraffic');
+  const rCR = $('#rCR');
+  const reset = $('#resetChart');
+
+  function renderCharts(){
+    const t = +rTraffic.value; // базовый трафик
+    const cr = +rCR.value/100; // коэффициент
+    track('chart_change',{traffic:t, cr});
+    // bars
+    bars.innerHTML='';
+    const n=8; const w = 48; const gap=20; const x0=60; const hMax=160; const y0=240;
+    const series = Array.from({length:n}, (_,i)=> Math.round(t*(.7+.6*Math.sin(i*.7+1))));
+    series.forEach((v,i)=>{
+      const h = Math.max(4, v/t * hMax);
+      const x = x0 + i*(w+gap);
+      const y = y0 - h;
+      const r = 8;
+      const path = `M${x} ${y+r} a${r} ${r} 0 0 1 ${r*-1} ${-r} h${w-2*r} a${r} ${r} 0 0 1 ${r} ${r} v${h-2*r} a${r} ${r} 0 0 1 ${-r} ${r} h${2*r-w} a${r} ${r} 0 0 1 ${-r} ${-r} Z`;
+      const el = document.createElementNS('http://www.w3.org/2000/svg','path');
+      el.setAttribute('d', path);
+      el.setAttribute('opacity','0.9');
+      bars.appendChild(el);
+    });
+    // line
+    const points = series.map((v,i)=>{
+      const x = x0 + i*(w+gap) + w/2;
+      const y = 240 - (v*cr / (t*1.2)) * hMax - 10;
+      return [x, y];
+    });
+    const d = points.map((p,i)=> (i? 'L':'M')+p[0]+' '+p[1]).join(' ');
+    line.setAttribute('d', d);
+    // donut
+    const total = 100;
+    const ok = Math.round(cr*100);
+    const warn = Math.max(0, 20 - Math.round(cr*50));
+    const errv = Math.max(0, total - ok - warn);
+    const arcs = [
+      {val: ok, color: 'url(#lineGrad)'},
+      {val: warn, color: '#d97706'},
+      {val: errv, color: '#e6e9f0'}
+    ];
+    const C = 90, R=70; const circumference = 2*Math.PI*R;
+    donut.innerHTML = '';
+    let acc=0;
+    arcs.forEach(a=>{
+      const dash = circumference * a.val/100;
+      const gap = circumference - dash;
+      const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      circle.setAttribute('cx', C); circle.setAttribute('cy', C); circle.setAttribute('r', R);
+      circle.setAttribute('fill','none'); circle.setAttribute('stroke', a.color); circle.setAttribute('stroke-width','16');
+      circle.setAttribute('stroke-dasharray', `${dash} ${gap}`);
+      circle.setAttribute('transform', `rotate(${acc*3.6} ${C} ${C})`);
+      acc += a.val;
+      donut.appendChild(circle);
+    });
+    const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+    label.setAttribute('x', C); label.setAttribute('y', C+6); label.setAttribute('text-anchor','middle'); label.setAttribute('font-size','20'); label.setAttribute('font-weight','700'); label.textContent = (cr*100).toFixed(1)+'%';
+    donut.appendChild(label);
+  }
+  rTraffic.addEventListener('input', renderCharts);
+  rCR.addEventListener('input', renderCharts);
+  reset.addEventListener('click', ()=>{ rTraffic.value=180; rCR.value=8; renderCharts(); track('chart_reset');});
+  renderCharts();
+
+})();
+</script>
 </body>
 </html>
