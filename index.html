@@ -445,9 +445,17 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
     ty = e.clientY;
   }, {passive:true});
 
+(function(){
+  const st = document.getElementById('mouseOrb').style;
+  let tx = innerWidth*0.5, ty = innerHeight*0.22, x=tx, y=ty;
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY},{passive:true});
   function loop(){
-    x = lerp(x, tx, 0.12);
-    y = lerp(y, ty, 0.12);
+    const dx = tx - x, dy = ty - y;
+    const dist = Math.hypot(dx, dy);                // пиксели
+    const t = Math.min(0.6, 0.12 + dist/800);       // 0.12..0.6
+    x = lerp(x, tx, t);
+    y = lerp(y, ty, t);
     st.setProperty('--x', x+'px');
     st.setProperty('--y', y+'px');
     requestAnimationFrame(loop);
