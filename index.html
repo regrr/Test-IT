@@ -18,7 +18,7 @@
     html{scroll-behavior:smooth}
     html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
     a{color:var(--acc);text-decoration:none}
-    .container{max-width:1280px;margin:0 auto;padding:0 24px}
+    .container{max-width:1400px;margin:0 auto;padding:0 24px}
 
     /* Progress bar */
     .progress{position:fixed;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));transform-origin:left;transform:scaleX(0);z-index:1000}
@@ -34,8 +34,11 @@
     @keyframes logoIn{to{opacity:1;transform:scale(1)}}
     .menu a,.menu button{margin-left:18px;color:var(--mut)}
     .menu a:hover,.menu button:hover{color:var(--ink)}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);cursor:pointer}
-    .btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));border:none;color:#fff}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer;font-weight:600;box-shadow:0 2px 0 rgba(15,23,42,.06);transition:transform .06s, box-shadow .2s}
+.btn:active{transform:translateY(1px)}
+    .btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));border:none;color:#fff;box-shadow:0 6px 16px rgba(37,99,235,.25)}
+.btn.secondary{background:#0f172a;color:#fff;border-color:#0f172a}
+.btn.outline{background:transparent;border:1px solid var(--acc);color:var(--acc)}
     .btn.ghost{background:transparent}
 
     /* Slides wrapper */
@@ -67,7 +70,7 @@
     /* Cases */
     .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .shot{border-radius:12px;overflow:hidden;border:1px solid var(--line);position:relative;background:#fff}
-    .shot img{width:100%;height:240px;object-fit:cover;display:block;filter:saturate(.95)}
+    .shot img{width:100%;height:280px;object-fit:cover;display:block;filter:saturate(.95)}
     .tag{position:absolute;left:10px;top:10px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.95);font-size:12px;border:1px solid var(--line)}
 
     /* FAQ */
@@ -172,16 +175,16 @@ ai:    assistants(rag,tool-use)
       <div class="container">
         <div class="paper reveal">
           <h2>Услуги</h2>
-          <p class="mut">Закрываем цикл: аудит → прототип → разработка → данные → поддержка. Каждый блок расширен описаниями, KPI и артефактами.</p>
-          <div class="grid-3" style="margin-top:12px">
-            <article class="card"><h3>Аналитика и аудит</h3><p class="mut">Интервью, CJM, определение гипотез ценности, рисков и KPI. Результат: хартия проекта, дорожная карта.</p></article>
-            <article class="card"><h3>Продуктовая разработка</h3><p class="mut">UX/UI, фронтенд, API, CI/CD, observability. Результат: MVP с метриками активации и удержания.</p></article>
-            <article class="card"><h3>AI‑внедрение</h3><p class="mut">RAG, ассистенты, политика данных, приватность. Результат: ускорение операций и автоматизация.</p></article>
-            <article class="card"><h3>Интеграции</h3><p class="mut">CRM/ERP, шины данных, ETL, очереди, вебхуки. Результат: консистентные данные и сквозная отчётность.</p></article>
-            <article class="card"><h3>Данные и отчётность</h3><p class="mut">Хранилище, витрины, дашборды, метрики бизнеса. Результат: управленческие решения на данных.</p></article>
-            <article class="card"><h3>SLA‑поддержка</h3><p class="mut">8×5/24×7, SLO/SLA, инциденты, постмортем. Результат: предсказуемость и стабильность.</p></article>
-          </div>
-          <div class="timeline" style="margin-top:16px">
+<p class="mut">Закрываем цикл: аудит → прототип → разработка → данные → поддержка. Кнопки действий для каждого направления.</p>
+<div class="grid-3" style="margin-top:12px">
+  <article class="card"><h3>Аналитика и аудит</h3><p class="mut">Интервью, CJM, гипотезы ценности, KPI, риски, roadmap.</p><div style="display:flex;gap:8px;margin-top:8px"><button class="btn secondary">Заказать аудит</button><button class="btn outline">Пример отчёта</button></div></article>
+  <article class="card"><h3>Продуктовая разработка</h3><p class="mut">UX/UI, фронтенд, API, CI/CD, observability. MVP с метриками.</p><div style="display:flex;gap:8px;margin-top:8px"><button class="btn secondary">Запросить MVP</button><button class="btn outline">Смета</button></div></article>
+  <article class="card"><h3>AI‑внедрение</h3><p class="mut">RAG, ассистенты, политика данных, приватность.</p><div style="display:flex;gap:8px;margin-top:8px"><button class="btn secondary">AI‑пилот</button><button class="btn outline">Кейсы</button></div></article>
+  <article class="card"><h3>Интеграции</h3><p class="mut">CRM/ERP, ETL, очереди, вебхуки, наблюдаемость.</p><div style="display:flex;gap:8px;margin-top:8px"><button class="btn secondary">Подключить</button><button class="btn outline">Схема</button></div></article>
+  <article class="card"><h3>Данные и отчётность</h3><p class="mut">Хранилище, витрины, дашборды, бизнес‑метрики.</p><div style="display:flex;gap:8px;margin-top:8px"><button class="btn secondary">Демо дашборда</button><button class="btn outline">Методика</button></div></article>
+  <article class="card"><h3>SLA‑поддержка</h3><p class="mut">8×5/24×7, SLO/SLA, инциденты, DR‑план.</p><div style="display:flex;gap:8px;margin-top:8px"><button class="btn secondary">Подключить SLA</button><button class="btn outline">Политики</button></div></article>
+</div>
+<div class="timeline" style="margin-top:16px">
             <div class="tl-item"><strong>Недели 1–2</strong><div class="mut">Диагностика, приоритизация, KPI, прототип‑скетчи.</div></div>
             <div class="tl-item"><strong>Недели 3–6</strong><div class="mut">MVP‑спринты, UX‑тесты, интеграции, observability.</div></div>
             <div class="tl-item"><strong>Недели 7–8</strong><div class="mut">Пилот, метрики эффекта, план развития на квартал.</div></div>
@@ -195,21 +198,33 @@ ai:    assistants(rag,tool-use)
       <div class="container">
         <div class="paper reveal">
           <h2>Проекты</h2>
-          <p class="mut">Выдержаны в деловой стилистике. Картинки обновлены под светлую тему.</p>
-          <div class="cases" style="margin-top:10px">
-            <div class="shot"><span class="tag">FinTech</span><img src="https://images.unsplash.com/photo-1559090336-9f6ab1ad61f9?q=80&w=1600&auto=format&fit=crop" alt="Кейс 1"></div>
-            <div class="shot"><span class="tag">E‑commerce</span><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop" alt="Кейс 2"></div>
-            <div class="shot"><span class="tag">AI Ops</span><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop" alt="Кейс 3"></div>
-          </div>
-          <div class="grid-4" style="margin-top:14px">
-            <div class="card"><h3>Результаты</h3><p class="mut">Сокращение ручных операций до −38%, p95 API 240мс, рост конверсии +12%.</p></div>
-            <div class="card"><h3>Метрики</h3><p class="mut">DAU/MAU, активация, удержание, CAC/LTV, NPS, время цикла задач.</p></div>
-            <div class="card"><h3>Риски</h3><p class="mut">Нагрузочные пики, интеграции, качество данных, зависимость от API.</p></div>
-            <div class="card"><h3>Архитектура</h3><p class="mut">Next.js + FastAPI + Postgres + Redis + очереди. Мониторинг, алерты.</p></div>
-          </div>
-        </div>
-      </div>
-    </section>
+<p class="mut">Выдержаны в деловой стилистике. Картинки обновлены под светлую тему. Добавлены фильтры и подробности.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px">
+  <button class="btn outline">Все</button>
+  <button class="btn outline">FinTech</button>
+  <button class="btn outline">E‑commerce</button>
+  <button class="btn outline">AI &amp; Data</button>
+  <button class="btn outline">B2B</button>
+</div>
+<div class="cases" style="margin-top:10px">
+  <div class="shot"><span class="tag">FinTech</span><img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1600&auto=format&fit=crop" alt="Кейс 1"></div>
+  <div class="shot"><span class="tag">E‑commerce</span><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop" alt="Кейс 2"></div>
+  <div class="shot"><span class="tag">AI Ops</span><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop" alt="Кейс 3"></div>
+</div>
+<div class="grid-4" style="margin-top:14px">
+  <div class="card"><h3>Результаты</h3><p class="mut">−38% ручных операций, p95 API 240мс, +12% конверсия. Экономия OPEX 1.8 млн ₽/год.</p></div>
+  <div class="card"><h3>Метрики</h3><p class="mut">DAU/MAU, активация, удержание, CAC/LTV, NPS, MTTR, cycle time.</p></div>
+  <div class="card"><h3>Риски</h3><p class="mut">Пики нагрузки, интеграции, качество данных, зависимость от внешних API.</p></div>
+  <div class="card"><h3>Архитектура</h3><p class="mut">Next.js · FastAPI · PostgreSQL · Redis · очереди · наблюдаемость.</p></div>
+</div>
+<div class="grid-3" style="margin-top:14px">
+  <div class="card"><h3>Команда по кейсу</h3><p class="mut">PM, UX, 2 FE, 1 BE, Data Eng, QA. Демо еженедельно, ретро раз в спринт.</p></div>
+  <div class="card"><h3>Финансы</h3><p class="mut">CAPEX по этапам, ограничение burn rate, v2 финансируется из эффекта v1.</p></div>
+  <div class="card"><h3>Документы</h3><p class="mut">ТЗ, спецификации API, схема БД, политика данных, чек‑листы релизов.</p></div>
+</div> 
+</div>
+</div>
+</section>
 
     <!-- SLIDE 4: ANALYTICS -->
     <section id="analytics" class="slide section">
@@ -218,71 +233,60 @@ ai:    assistants(rag,tool-use)
           <h2>Аналитика</h2>
           <p class="mut">Живые диаграммы. Меняйте параметры — графики перестраиваются.</p>
           <div class="charts" style="margin-top:10px">
-            <!-- Line chart -->
-            <div class="chart">
-              <svg id="lineChart" viewBox="0 0 600 260" width="100%" height="260" role="img" aria-label="Линейный график">
-                <rect x="0" y="0" width="600" height="260" fill="#ffffff" rx="10" ry="10" stroke="var(--line)"/>
-                <g stroke="#eef2f7">
-                  <line x1="40" x2="560" y1="40" y2="40"/>
-                  <line x1="40" x2="560" y1="90" y2="90"/>
-                  <line x1="40" x2="560" y1="140" y2="140"/>
-                  <line x1="40" x2="560" y1="190" y2="190"/>
-                </g>
-                <polyline id="poly" fill="none" stroke="url(#grad)" stroke-width="3" points=""/>
-                <defs>
-                  <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stop-color="#2563eb"/>
-                    <stop offset="100%" stop-color="#0ea5e9"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px">
-                <label>Рост A: <input id="a" type="range" min="0" max="100" value="30"></label>
-                <label>Рост B: <input id="b" type="range" min="0" max="100" value="60"></label>
-                <label>Рост C: <input id="c" type="range" min="0" max="100" value="80"></label>
-              </div>
-            </div>
-            <!-- Bar chart + KPI -->
-            <div class="chart">
-              <svg id="barChart" viewBox="0 0 300 260" width="100%" height="260" role="img" aria-label="Столбчатая диаграмма">
-                <rect x="0" y="0" width="300" height="260" fill="#ffffff" rx="10" ry="10" stroke="var(--line)"/>
-                <g id="bars"></g>
-              </svg>
-              <div style="display:grid;gap:8px;margin-top:8px">
-                <label>Продажи Q1–Q4: <input id="barsInput" type="range" min="0" max="100" value="50"></label>
-                <div class="mut">KPI: целевой рост ≥ <strong>+15%</strong>, отклонение ≤ <strong>5%</strong>.</div>
-              </div>
-            </div>
-          </div>
-          <!-- Donut + table -->
-          <div class="grid-2" style="margin-top:16px">
-            <div class="chart">
-              <svg id="donut" viewBox="0 0 220 220" width="100%" height="220" aria-label="Доли каналов">
-                <circle cx="110" cy="110" r="80" fill="#fff" stroke="#eef2f7" stroke-width="18"/>
-                <circle id="d1" cx="110" cy="110" r="80" fill="none" stroke="#2563eb" stroke-width="18" stroke-dasharray="0 502" transform="rotate(-90 110 110)"/>
-                <circle id="d2" cx="110" cy="110" r="80" fill="none" stroke="#0ea5e9" stroke-width="18" stroke-dasharray="0 502" transform="rotate(-90 110 110)"/>
-                <circle id="d3" cx="110" cy="110" r="80" fill="none" stroke="#93c5fd" stroke-width="18" stroke-dasharray="0 502" transform="rotate(-90 110 110)"/>
-                <text id="donutLabel" x="110" y="118" text-anchor="middle" font-size="16">Каналы</text>
-              </svg>
-              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-                <label>Organic <input id="dn1" type="range" min="0" max="100" value="40"></label>
-                <label>Paid <input id="dn2" type="range" min="0" max="100" value="35"></label>
-                <label>Referrals <input id="dn3" type="range" min="0" max="100" value="25"></label>
-              </div>
-            </div>
-            <div class="paper" style="border:1px dashed var(--line)">
-              <h3>Интерпретация</h3>
-              <p class="mut">Смещение в Organic снижает CAC, но повышает лаг в результатах. Paid ускоряет тесты гипотез. Referrals «размазывают» сезонность и добавляют качество лидов.</p>
-              <ul class="mut">
-                <li>Контрольная панель: еженедельно.</li>
-                <li>Доверительные интервалы: 95%.</li>
-                <li>Политика отсечения аномалий: IQR × 1.5.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <div class="chart">
+    <svg id="lineChart" viewBox="0 0 600 260" width="100%" height="260" role="img" aria-label="Линейный график">
+      <rect x="0" y="0" width="600" height="260" fill="#ffffff" rx="10" ry="10" stroke="var(--line)"/>
+      <g stroke="#eef2f7">
+        <line x1="40" x2="560" y1="40" y2="40"/>
+        <line x1="40" x2="560" y1="90" y2="90"/>
+        <line x1="40" x2="560" y1="140" y2="140"/>
+        <line x1="40" x2="560" y1="190" y2="190"/>
+      </g>
+      <polyline id="poly" fill="none" stroke="url(#grad)" stroke-width="3" points=""/>
+      <defs><linearGradient id="grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2563eb"/><stop offset="100%" stop-color="#0ea5e9"/></linearGradient></defs>
+    </svg>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px">
+      <label>Рост A: <input id="a" type="range" min="0" max="100" value="30"></label>
+      <label>Рост B: <input id="b" type="range" min="0" max="100" value="60"></label>
+      <label>Рост C: <input id="c" type="range" min="0" max="100" value="80"></label>
+      <button class="btn outline" id="btnResetCharts">Сброс</button>
+    </div>
+  </div>
+  <div class="chart">
+    <svg id="barChart" viewBox="0 0 300 260" width="100%" height="260" role="img" aria-label="Столбчатая диаграмма">
+      <rect x="0" y="0" width="300" height="260" fill="#ffffff" rx="10" ry="10" stroke="var(--line)"/>
+      <g id="bars"></g>
+    </svg>
+    <div style="display:grid;gap:8px;margin-top:8px">
+      <label>Продажи Q1–Q4: <input id="barsInput" type="range" min="0" max="100" value="50"></label>
+      <div class="mut">KPI: целевой рост ≥ <strong>+15%</strong>, отклонение ≤ <strong>5%</strong>.</div>
+    </div>
+  </div>
+</div>
+<div class="grid-2" style="margin-top:16px">
+  <div class="chart">
+    <svg id="donut" viewBox="0 0 220 220" width="100%" height="220" aria-label="Доли каналов">
+      <circle cx="110" cy="110" r="80" fill="#fff" stroke="#eef2f7" stroke-width="18"/>
+      <circle id="d1" cx="110" cy="110" r="80" fill="none" stroke="#2563eb" stroke-width="18" stroke-dasharray="0 502" transform="rotate(-90 110 110)"/>
+      <circle id="d2" cx="110" cy="110" r="80" fill="none" stroke="#0ea5e9" stroke-width="18" stroke-dasharray="0 502" transform="rotate(-90 110 110)"/>
+      <circle id="d3" cx="110" cy="110" r="80" fill="none" stroke="#93c5fd" stroke-width="18" stroke-dasharray="0 502" transform="rotate(-90 110 110)"/>
+      <text id="donutLabel" x="110" y="118" text-anchor="middle" font-size="16">Каналы</text>
+    </svg>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      <label>Organic <input id="dn1" type="range" min="0" max="100" value="40"></label>
+      <label>Paid <input id="dn2" type="range" min="0" max="100" value="35"></label>
+      <label>Referrals <input id="dn3" type="range" min="0" max="100" value="25"></label>
+    </div>
+  </div>
+  <div class="paper" style="border:1px dashed var(--line)">
+    <h3>Интерпретация</h3>
+    <p class="mut">Смещение в Organic снижает CAC, Paid — ускоряет тесты, Referrals — стабилизирует качество лидов. Следим за сезонностью и лагами.</p>
+    <ul class="mut"><li>Контрольная панель еженедельно.</li><li>CI 95%.</li><li>IQR × 1.5 для аномалий.</li></ul>
+  </div>
+</div>
+</div>
+</div>
+</section>
 
     <!-- SLIDE 5: PARTNERS -->
     <section class="slide section">
@@ -291,16 +295,22 @@ ai:    assistants(rag,tool-use)
           <h2>Партнёры</h2>
           <p class="mut">Реестры и платформы, с которыми мы типично интегрируемся.</p>
           <div class="partners" style="margin-top:10px">
-            <div class="partner">NorthWind Capital</div>
-            <div class="partner">Volta Cloud</div>
-            <div class="partner">Sigma Data</div>
-            <div class="partner">Kappa CRM</div>
-            <div class="partner">OmniPay</div>
-            <div class="partner">StreamQueue</div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <div class="partner">NorthWind Capital</div>
+  <div class="partner">Volta Cloud</div>
+  <div class="partner">Sigma Data</div>
+  <div class="partner">Kappa CRM</div>
+  <div class="partner">OmniPay</div>
+  <div class="partner">StreamQueue</div>
+  <div class="partner">LedgerX</div>
+  <div class="partner">FormBee</div>
+  <div class="partner">MailJet</div>
+  <div class="partner">GeoIPX</div>
+  <div class="partner">AuthKit</div>
+  <div class="partner">ClickHouseCloud</div>
+</div>
+</div>
+</div>
+</section>
 
     <!-- SLIDE 6: DOCS -->
     <section id="docs" class="slide section">
@@ -532,6 +542,10 @@ ai:    assistants(rag,tool-use)
       donutLabel.textContent = `Total ${sum}`;
     }
     [dn1,dn2,dn3].forEach(i=> i?.addEventListener('input', drawDonut)); drawDonut();
+  </script>
+// extra JS for buttons and charts reset
+const resetBtn = document.getElementById('btnResetCharts');
+resetBtn?.addEventListener('click',()=>{ a.value=30;b.value=60;c.value=80;barsInput.value=50;dn1.value=40;dn2.value=35;dn3.value=25;drawLine();drawBars();drawDonut(); });
   </script>
 </body>
 </html>
