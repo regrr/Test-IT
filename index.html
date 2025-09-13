@@ -3,122 +3,111 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>NEBULA IT — Цифровые продукты и консалтинг</title>
-  <meta name="description" content="Проектируем и развиваем цифровые продукты: веб‑приложения, интеграции, AI‑сервисы."/>
+  <title>NEBULA IT — Консалтинг и разработка</title>
+  <meta name="description" content="Цифровые продукты для бизнеса: аналитика, веб‑приложения, интеграции, AI."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#07090f; --panel:#0c111b; --panel2:#0f1625; --ink:#e5e7eb; --mut:#9aa3b2; --acc:#60a5fa; --acc2:#22d3ee; --ok:#22c55e; --warn:#f59e0b; --err:#ef4444; --br:16px;
+      /* Светлая деловая тема */
+      --bg:#f6f7fb; --paper:#ffffff; --ink:#0f172a; --mut:#5b6472; --line:#e6e9f0;
+      --acc:#2563eb; --acc2:#0ea5e9; --ok:#16a34a; --warn:#d97706; --err:#dc2626;
+      --br:14px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    html,body{margin:0;padding:0;background:radial-gradient(1400px 800px at 10% -10%, rgba(96,165,250,.12), transparent 60%),
-        radial-gradient(1200px 600px at 90% 10%, rgba(34,211,238,.10), transparent 60%),var(--bg);
-      color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; height:100%}
-    body{scroll-snap-type:y mandatory; overflow-y:scroll}
-    a{color:inherit;text-decoration:none}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    a{color:var(--acc);text-decoration:none}
     .container{max-width:1240px;margin:0 auto;padding:0 20px}
-    .blur{backdrop-filter:saturate(140%) blur(8px)}
 
     /* Splash intro */
-    .splash{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(800px 400px at 50% 30%,rgba(96,165,250,.12),transparent 60%),#05070c;z-index:999}
-    .splash .logoBig{width:120px;height:120px;border-radius:28px;display:grid;place-items:center;color:#041018;background:conic-gradient(from 0deg,var(--acc),var(--acc2),var(--acc));box-shadow:0 0 80px rgba(96,165,250,.35) inset, 0 0 40px rgba(34,211,238,.2)}
-    .splash .logoBig span{font-weight:800;font-size:42px;letter-spacing:.5px}
-    .splash .ring{position:absolute;width:220px;height:220px;border-radius:999px;border:2px solid rgba(255,255,255,.08);animation:ring 1.8s ease infinite}
+    .splash{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(800px 400px at 50% 30%,rgba(37,99,235,.05),transparent 60%),#f8faff;z-index:999}
+    .splash .logoBig{width:120px;height:120px;border-radius:28px;display:grid;place-items:center;color:#0f172a;background:conic-gradient(from 0deg,#bcd2ff,#b7f1ff,#bcd2ff);box-shadow:0 0 80px rgba(37,99,235,.15) inset, 0 0 32px rgba(14,165,233,.12)}
+    .splash .logoBig span{font-weight:800;font-size:42px}
+    .splash .ring{position:absolute;width:220px;height:220px;border-radius:999px;border:2px solid #e8eef9;animation:ring 1.8s ease infinite}
     @keyframes ring{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.15);opacity:0}}
     .splash.hide{animation:fadeOut .8s ease forwards}
     @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
     /* Header */
-    header{position:sticky;top:0;z-index:100;background:rgba(7,9,15,.55);border-bottom:1px solid rgba(255,255,255,.06)}
+    header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.8);backdrop-filter:saturate(130%) blur(8px);border-bottom:1px solid var(--line)}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.3px}
-    .logo{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:conic-gradient(from 180deg at 50% 50%,var(--acc),var(--acc2));box-shadow:0 0 24px rgba(96,165,250,.35) inset;color:#0a0c12;opacity:0;transform:scale(.85);animation:logoIn .9s ease .2s forwards}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+    .logo{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:conic-gradient(from 180deg,#93c5fd,#67e8f9);color:#0f172a;opacity:0;transform:scale(.9);animation:logoIn .8s ease .2s forwards}
     @keyframes logoIn{to{opacity:1;transform:scale(1)}}
-    .menu a,.menu button{margin-left:22px;color:var(--mut)}
+    .menu a,.menu button{margin-left:18px;color:var(--mut)}
     .menu a:hover,.menu button:hover{color:var(--ink)}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.03);cursor:pointer}
-    .btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));border:none;color:#051019}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);cursor:pointer}
+    .btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));border:none;color:#fff}
+    .btn.ghost{background:transparent}
 
-    /* Sections — full-screen snap */
-    .section, .hero{min-height:100svh;scroll-snap-align:start;display:flex;align-items:center}
+    /* Section base */
     .section{padding:72px 0}
+    .paper{background:var(--paper);border:1px solid var(--line);border-radius:var(--br);padding:20px}
+    h1{font-size:52px;line-height:1.05;margin:14px 0 6px}
+    h2{font-size:32px;margin:0 0 8px}
+    .mut{color:var(--mut)}
 
+    /* Hero grid */
+    .hero{padding:84px 0 32px}
     .grid-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
-    .kicker{display:inline-flex;gap:10px;align-items:center;padding:6px 10px;border:1px solid rgba(255,255,255,.12);border-radius:999px;color:var(--mut)}
-    h1{font-size:64px;line-height:1.05;margin:14px 0 10px}
-    .lead{font-size:18px;color:var(--mut);max-width:70ch}
-    .hero-cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-    .codecard{border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border-radius:var(--br);padding:16px;font-family:"JetBrains Mono",monospace;font-size:13.5px;position:relative}
-    .glow{position:absolute;inset:-2px;border-radius:var(--br);background:radial-gradient(500px 180px at 20% 0%,rgba(96,165,250,.20),transparent 60%);pointer-events:none}
-    .cursor{display:inline-block;width:10px;background:#9ecbff;animation:blink 1.2s infinite}
+    .kicker{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--mut)}
+    .codecard{border:1px solid var(--line);background:linear-gradient(180deg,#ffffff,#f9fbff);border-radius:12px;padding:16px;font-family:"JetBrains Mono",monospace;font-size:13.5px;position:relative}
+    .cursor{display:inline-block;width:10px;background:#3b82f6;animation:blink 1.2s infinite}
     @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
 
-    h2{font-size:36px;margin:0 0 8px}
-    .mut{color:var(--mut)}
+    /* Cards */
     .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .card{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;position:relative;overflow:hidden;transition:transform .3s}
-    .card:before{content:"";position:absolute;inset:-1px;background:radial-gradient(400px 120px at 20% 0%,rgba(96,165,250,.12),transparent 60%);opacity:0;transition:opacity .3s}
-    .card:hover{transform:translateY(-4px)}
-    .card:hover:before{opacity:1}
-
-    /* Marquee */
-    .marquee{overflow:hidden;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02)}
-    .track{display:flex;gap:40px;white-space:nowrap;animation:slide 18s linear infinite;padding:14px 0}
-    @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;transition:transform .25s, box-shadow .25s}
+    .card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(10,18,40,.06)}
 
     /* Cases */
     .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .shot{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08);position:relative}
-    .shot img{width:100%;height:240px;object-fit:cover;display:block;filter:saturate(0.92)}
-    .shot .tag{position:absolute;left:10px;top:10px;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,.45);font-size:12px}
+    .shot{border-radius:12px;overflow:hidden;border:1px solid var(--line);position:relative;background:#fff}
+    .shot img{width:100%;height:220px;object-fit:cover;display:block;filter:saturate(.95)}
+    .tag{position:absolute;left:10px;top:10px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.9);font-size:12px;border:1px solid var(--line)}
 
-    /* Steps */
-    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .step{background:var(--panel2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px}
+    /* FAQ */
+    .faq{display:grid;gap:10px}
+    .faq details{border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff}
+    .faq summary{cursor:pointer;font-weight:600}
+
+    /* Partners */
+    .partners{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+    .partner{border:1px solid var(--line);background:#fff;border-radius:10px;padding:14px;display:grid;place-items:center}
+
+    /* Docs */
+    .docs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .doc{border:1px solid var(--line);background:#fff;border-radius:10px;padding:14px}
+
+    /* Charts (SVG) */
+    .charts{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+    .chart{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
 
     /* Stats */
     .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .stat{background:var(--panel);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:18px;text-align:center}
-    .stat strong{display:block;font-size:36px}
+    .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+    .stat strong{display:block;font-size:30px}
 
     /* CTA */
-    .cta{background:linear-gradient(135deg,rgba(96,165,250,.10),rgba(34,211,238,.10));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
-
-    /* Socials */
-    .socials{display:flex;gap:10px}
-    .socials a{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.12)}
+    .cta{background:linear-gradient(135deg,#eef4ff,#e6fbff);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
 
     /* Footer */
-    footer{padding:28px 0;color:var(--mut);border-top:1px solid rgba(255,255,255,.06);scroll-snap-align:end}
+    footer{padding:28px 0;color:var(--mut);border-top:1px solid var(--line)}
 
-    /* Modals */
-    .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(3,6,12,.6);z-index:200}
-    .modal.open{display:grid}
-    .dialog{width:min(760px,92vw);background:var(--panel2);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px}
-    .dialog header{position:relative;background:transparent;border:none;padding:0;margin:0 0 8px}
-    .dialog .close{position:absolute;right:4px;top:4px}
-
-    /* Reveal + slide-in */
-    .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
     .reveal.show{opacity:1;transform:none}
-    [data-anim="left"].reveal{transform:translateX(-28px)}
-    [data-anim="right"].reveal{transform:translateX(28px)}
 
-    /* Range slider */
-    .range{display:grid;gap:8px}
-    .range input{width:100%}
-
-    @media (max-width:1040px){
+    @media (max-width:1100px){
       .grid-hero{grid-template-columns:1fr}
-      .cards,.cases,.steps,.stats{grid-template-columns:1fr 1fr}
+      .cards,.cases,.partners,.docs,.charts,.stats{grid-template-columns:1fr 1fr}
       .cta{grid-template-columns:1fr}
     }
     @media (max-width:640px){
-      h1{font-size:42px}
-      .cards,.cases,.steps,.stats{grid-template-columns:1fr}
+      h1{font-size:38px}
+      .cards,.cases,.partners,.docs,.charts,.stats{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -129,161 +118,174 @@
     <div class="ring"></div>
   </div>
 
-  <header class="blur">
+  <header>
     <div class="container nav">
       <div class="brand"><div class="logo">✦</div> NEBULA IT</div>
       <nav class="menu" aria-label="Главное меню">
         <a href="#hero">Главная</a>
         <a href="#services">Услуги</a>
-        <a href="#cases">Кейсы</a>
-        <a href="#approach">Подход</a>
-        <button class="btn" id="btnRequisites">Реквизиты</button>
+        <a href="#cases">Проекты</a>
+        <a href="#charts">Аналитика</a>
+        <a href="#docs">Документация</a>
+        <a href="#faq">FAQ</a>
+        <button class="btn ghost" id="btnRequisites">Реквизиты</button>
         <button class="btn primary" id="btnContact">Связаться</button>
       </nav>
     </div>
   </header>
 
   <main>
-    <!-- HERO (snap) -->
+    <!-- HERO -->
     <section id="hero" class="hero">
       <div class="container grid-hero">
         <div>
-          <span class="kicker">AI · Веб‑приложения · Интеграции</span>
-          <h1 class="reveal" data-anim="left">Создаём продукты, которые двигают бизнес</h1>
-          <p class="lead reveal" style="transition-delay:.08s">Проектируем и запускаем веб‑сервисы, внедряем AI, строим устойчивую архитектуру. Сроки и прозрачность — в контракте.</p>
-          <div class="hero-cta reveal" style="transition-delay:.16s">
+          <span class="kicker">Консалтинг · Веб · Интеграции · AI</span>
+          <h1 class="reveal">Делаем цифровые продукты, которые решают задачи бизнеса</h1>
+          <p class="mut reveal" style="transition-delay:.07s">От аудита и прототипа до продакшена и SLA. Ставим KPI, считаем экономический эффект, показываем прогресс каждую неделю.</p>
+          <div style="display:flex;gap:10px;margin-top:12px" class="reveal" style="transition-delay:.12s">
             <button class="btn primary" id="btnBrief">Заполнить бриф</button>
             <a class="btn" href="#services">Смотреть услуги</a>
           </div>
-          <div class="socials" style="margin-top:14px">
-            <a href="#" aria-label="Telegram" title="Telegram">📨</a>
-            <a href="#" aria-label="GitHub" title="GitHub">💻</a>
-            <a href="#" aria-label="LinkedIn" title="LinkedIn">🔗</a>
-          </div>
         </div>
-        <div class="codecard reveal" style="transition-delay:.12s">
-<pre><code>// Архитектура micro + AI
-service web-api {
-  auth: oauth2;
-  cache: redis@managed;
-  ai:    openai(gpt-4o);
-}
-
-pipeline deploy(stage) {
-  lint(); test(); build();
-  ship → vercel; notify → slack;
-}
-
-result = product(ROI &gt;= 2.4);
+        <div class="codecard reveal" style="transition-delay:.1s">
+<pre><code>// product.yaml
+name: nebula-analytics
+stack: nextjs + fastapi + pg + redis
+ci: lint → test → build → deploy(vercel)
+slo: uptime &gt;= 99.5%, p95 &lt; 300ms
+ai:  assistants(rag,tool-use)
 <span class="cursor"> </span></code></pre>
-          <div class="glow" aria-hidden="true"></div>
         </div>
       </div>
     </section>
 
-    <!-- MARQUEE (snap) -->
-    <section class="section marquee" role="region" aria-label="Технологии">
-      <div class="container">
-        <div class="track">
-          <span>TypeScript</span><span>·</span><span>Next.js</span><span>·</span><span>Python</span><span>·</span><span>FastAPI</span><span>·</span><span>PostgreSQL</span><span>·</span><span>Redis</span><span>·</span><span>Vercel</span><span>·</span><span>Docker</span><span>·</span><span>K8s</span><span>·</span><span>OpenAI</span><span>·</span><span>LangChain</span><span>·</span><span>ClickHouse</span><span>·</span><span>Supabase</span>
-          <span>TypeScript</span><span>·</span><span>Next.js</span><span>·</span><span>Python</span><span>·</span><span>FastAPI</span><span>·</span><span>PostgreSQL</span><span>·</span><span>Redis</span><span>·</span><span>Vercel</span><span>·</span><span>Docker</span><span>·</span><span>K8s</span><span>·</span><span>OpenAI</span><span>·</span><span>LangChain</span><span>·</span><span>ClickHouse</span><span>·</span><span>Supabase</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICES (snap) -->
+    <!-- SERVICES -->
     <section id="services" class="section">
       <div class="container">
-        <h2 class="reveal">Услуги</h2>
-        <p class="mut reveal" style="transition-delay:.08s">От стратегии до продакшена. Делаем, измеряем, улучшаем.</p>
-        <div class="cards" style="margin-top:16px">
-          <article class="card reveal" data-anim="left">
-            <h3>Продуктовая разработка</h3>
-            <p class="mut">Discovery, UX/UI, фронтенд и API. MVP за 4–8 недель.</p>
-          </article>
-          <article class="card reveal">
-            <h3>AI‑внедрение</h3>
-            <p class="mut">RAG‑сервисы, ассистенты, тонкая настройка моделей, приватность данных.</p>
-          </article>
-          <article class="card reveal" data-anim="right">
-            <h3>Интеграции и данные</h3>
-            <p class="mut">CRM/ERP, аналитика, ETL‑конвейеры, очереди, наблюдаемость.</p>
-          </article>
+        <div class="paper reveal">
+          <h2>Услуги</h2>
+          <p class="mut">Комплект закрывает весь цикл: стратегия → дизайн → разработка → данные → поддержка.</p>
+          <div class="cards" style="margin-top:12px">
+            <article class="card"><h3>Аналитика и аудит</h3><p class="mut">Интервью, требования, KPI, риски, дорожная карта.</p></article>
+            <article class="card"><h3>Продуктовая разработка</h3><p class="mut">UX/UI, фронтенд, API, CI/CD, observability.</p></article>
+            <article class="card"><h3>AI‑внедрение</h3><p class="mut">RAG, ассистенты, приватность, политика данных.</p></article>
+            <article class="card"><h3>Интеграции</h3><p class="mut">CRM/ERP, шины данных, ETL, очереди, вебхуки.</p></article>
+            <article class="card"><h3>Данные и отчётность</h3><p class="mut">Хранилище, витрины, дашборды, метрики бизнеса.</p></article>
+            <article class="card"><h3>SLA‑поддержка</h3><p class="mut">8×5/24×7, RTO/RPO, мониторинг, инциденты.</p></article>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CASES (snap) -->
+    <!-- CASES / PROJECTS -->
     <section id="cases" class="section">
       <div class="container">
-        <h2 class="reveal">Кейсы</h2>
-        <div class="cases" style="margin-top:12px">
-          <div class="shot reveal"><span class="tag">FinTech</span><img src="https://images.unsplash.com/photo-1487014679447-9f8336841d58?q=80&w=1400&auto=format&fit=crop" alt="Кейс 1"></div>
-          <div class="shot reveal" style="transition-delay:.06s"><span class="tag">E‑commerce</span><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1400&auto=format&fit=crop" alt="Кейс 2"></div>
-          <div class="shot reveal" style="transition-delay:.12s"><span class="tag">AI Ops</span><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1400&auto=format&fit=crop" alt="Кейс 3"></div>
+        <div class="paper reveal">
+          <h2>Проекты</h2>
+          <div class="cases" style="margin-top:10px">
+            <div class="shot"><span class="tag">FinTech</span><img src="https://images.unsplash.com/photo-1559090336-9f6ab1ad61f9?q=80&w=1400&auto=format&fit=crop" alt="Кейс 1"></div>
+            <div class="shot"><span class="tag">E‑comm</span><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1400&auto=format&fit=crop" alt="Кейс 2"></div>
+            <div class="shot"><span class="tag">AI Ops</span><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1400&auto=format&fit=crop" alt="Кейс 3"></div>
+          </div>
+          <div class="stats" style="margin-top:14px">
+            <div class="stat"><strong data-counter="42">0</strong><span class="mut">запусков</span></div>
+            <div class="stat"><strong data-counter="18">0</strong><span class="mut">AI‑кейсов</span></div>
+            <div class="stat"><strong data-counter="9">0</strong><span class="mut">лет опыта</span></div>
+            <div class="stat"><strong data-counter="99">0</strong><span class="mut">% SLA</span></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- TEAM (snap) -->
+    <!-- ANALYTICS / CHARTS -->
+    <section id="charts" class="section">
+      <div class="container">
+        <div class="paper reveal">
+          <h2>Аналитика</h2>
+          <p class="mut">Живые диаграммы без библиотек. Сдвигайте ползунки — графики обновятся.</p>
+          <div class="charts" style="margin-top:10px">
+            <!-- Line chart -->
+            <div class="chart">
+              <svg id="lineChart" viewBox="0 0 600 260" width="100%" height="260" role="img" aria-label="Линейный график">
+                <rect x="0" y="0" width="600" height="260" fill="#ffffff" rx="10" ry="10" stroke="var(--line)"/>
+                <g id="grid" stroke="#eef2f7">
+                  <line x1="40" x2="560" y1="40" y2="40"/>
+                  <line x1="40" x2="560" y1="90" y2="90"/>
+                  <line x1="40" x2="560" y1="140" y2="140"/>
+                  <line x1="40" x2="560" y1="190" y2="190"/>
+                </g>
+                <polyline id="poly" fill="none" stroke="url(#grad)" stroke-width="3" points=""/>
+                <defs>
+                  <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#2563eb"/>
+                    <stop offset="100%" stop-color="#0ea5e9"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px">
+                <label>Рост A: <input id="a" type="range" min="0" max="100" value="30"></label>
+                <label>Рост B: <input id="b" type="range" min="0" max="100" value="60"></label>
+                <label>Рост C: <input id="c" type="range" min="0" max="100" value="80"></label>
+              </div>
+            </div>
+            <!-- Bar chart -->
+            <div class="chart">
+              <svg id="barChart" viewBox="0 0 300 260" width="100%" height="260" role="img" aria-label="Столбчатая диаграмма">
+                <rect x="0" y="0" width="300" height="260" fill="#ffffff" rx="10" ry="10" stroke="var(--line)"/>
+                <g id="bars"></g>
+              </svg>
+              <div style="display:grid;gap:8px;margin-top:8px">
+                <label>Продажи Q1–Q4: <input id="barsInput" type="range" min="0" max="100" value="50"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTNERS -->
     <section class="section">
       <div class="container">
-        <h2 class="reveal">Команда</h2>
-        <div class="cards" style="margin-top:12px">
-          <article class="card reveal" data-anim="left"><h3>Артём · CTO</h3><p class="mut">Архитектура, производительность, безопасность.</p></article>
-          <article class="card reveal"><h3>Марина · PM</h3><p class="mut">Сроки, риски, коммуникации, бюджеты.</p></article>
-          <article class="card reveal" data-anim="right"><h3>Илья · Lead AI</h3><p class="mut">RAG, ML‑пайплайны, приватность данных.</p></article>
+        <div class="paper reveal">
+          <h2>Партнёры</h2>
+          <div class="partners" style="margin-top:10px">
+            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
+            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
+            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
+            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
+            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
+            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- PRICING with sliders (snap) -->
-    <section class="section">
+    <!-- DOCS -->
+    <section id="docs" class="section">
       <div class="container">
-        <h2 class="reveal">Калькулятор бюджета</h2>
-        <div class="dialog" style="background:var(--panel);">
-          <div class="range">
-            <label>Сложность (экраны): <strong id="r1v">5</strong></label>
-            <input id="r1" type="range" min="3" max="20" value="5">
+        <div class="paper reveal">
+          <h2>Документация</h2>
+          <div class="docs" style="margin-top:10px">
+            <div class="doc"><h3>API</h3><p class="mut">REST + Webhook. Авторизация OAuth2. Лимиты: 600 rpm.</p><button class="btn" id="btnApi">Показать пример</button></div>
+            <div class="doc"><h3>Инфраструктура</h3><p class="mut">Vercel фронт, FastAPI бэкенд, PostgreSQL, Redis. Мониторинг и логи.</p><button class="btn" id="btnInfra">Диаграмма</button></div>
           </div>
-          <div class="range">
-            <label>Интеграции (шт): <strong id="r2v">1</strong></label>
-            <input id="r2" type="range" min="0" max="10" value="1">
-          </div>
-          <div class="range">
-            <label>AI‑модули (шт): <strong id="r3v">0</strong></label>
-            <input id="r3" type="range" min="0" max="5" value="0">
-          </div>
-          <p class="mut">Оценка: <strong id="price">—</strong></p>
-          <div style="display:flex;gap:10px"><button class="btn primary" id="btnOpenModal">Оставить заявку</button><button class="btn" id="btnRequisites2">Реквизиты</button></div>
         </div>
       </div>
     </section>
 
-    <!-- APPROACH (snap) -->
-    <section id="approach" class="section">
+    <!-- FAQ -->
+    <section id="faq" class="section">
       <div class="container">
-        <h2 class="reveal">Подход</h2>
-        <div class="steps" style="margin-top:12px">
-          <div class="step reveal"><strong>01 · Диагностика</strong><p class="mut">Интервью, цели, риски, KPI. Хартия проекта.</p></div>
-          <div class="step reveal" style="transition-delay:.06s"><strong>02 · Прототип</strong><p class="mut">Интерактивные сценарии и метрики ценности.</p></div>
-          <div class="step reveal" style="transition-delay:.12s"><strong>03 · Спринты</strong><p class="mut">Короткие итерации, демо каждую неделю.</p></div>
-          <div class="step reveal" style="transition-delay:.18s"><strong>04 · Эксплуатация</strong><p class="mut">Мониторинг, A/B, план развития на квартал.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA / BRIEF (snap) -->
-    <section id="brief" class="section">
-      <div class="container">
-        <div class="cta reveal">
-          <div>
-            <h3 style="margin:0 0 6px">Обсудим вашу задачу</h3>
-            <p class="mut" style="margin:0">Оставьте контакты. Пришлём 5 вопросов по брифу и предложим дорожную карту.</p>
+        <div class="paper reveal">
+          <h2>FAQ</h2>
+          <div class="faq" style="margin-top:10px">
+            <details><summary>Сколько длится запуск MVP?</summary><p class="mut">Обычно 4–8 недель при готовом контенте и согласовании.</p></details>
+            <details><summary>Как считаете ROI?</summary><p class="mut">Определяем целевые метрики, строим воронки, считаем инкремент.</p></details>
+            <details><summary>Работаете по ТЗ заказчика?</summary><p class="mut">Да. Также можем оформить требования и прототип сами.</p></details>
           </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn primary" id="btnBrief2">Открыть форму</button>
-            <button class="btn" id="btnPolicy">Политика</button>
+          <div class="cta" style="margin-top:14px">
+            <div><strong>Нужна консультация?</strong><div class="mut">Оставьте контакты, пришлём чек‑лист на 1 страницу.</div></div>
+            <button class="btn primary" id="btnOpenBrief2">Оставить заявку</button>
           </div>
         </div>
       </div>
@@ -293,24 +295,23 @@ result = product(ROI &gt;= 2.4);
   <footer id="contact">
     <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
       <div>© <span id="year"></span> NEBULA IT</div>
-      <div class="mut">Москва · email: hello@example.com · t.me/nebula_it</div>
-      <div class="socials">
-        <a href="#" aria-label="Telegram" title="Telegram">📨</a>
-        <a href="#" aria-label="GitHub" title="GitHub">💻</a>
-        <a href="#" aria-label="LinkedIn" title="LinkedIn">🔗</a>
-        <a href="#" aria-label="YouTube" title="YouTube">▶️</a>
+      <div class="mut">Москва · hello@example.com · t.me/nebula_it</div>
+      <div style="display:flex;gap:8px">
+        <a class="btn" href="#">Telegram</a>
+        <a class="btn" href="#">GitHub</a>
+        <a class="btn" href="#">LinkedIn</a>
       </div>
     </div>
   </footer>
 
-  <!-- MODAL: Contact / Brief -->
-  <div class="modal" id="modalBrief" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="dialog">
-      <header>
-        <h3 id="modalTitle" style="margin:0">Заявка на консультацию</h3>
-        <button class="btn close" id="btnCloseBrief" aria-label="Закрыть">✕</button>
-      </header>
-      <p class="mut" style="margin:6px 0 12px">Оставьте контакты, мы ответим в рабочее время.</p>
+  <!-- MODALS -->
+  <div class="modal" id="modalBrief" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:200">
+    <div class="paper" style="width:min(760px,92vw)">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+        <h3 style="margin:0">Заявка на консультацию</h3>
+        <button class="btn" id="btnCloseBrief">Закрыть</button>
+      </div>
+      <p class="mut" style="margin:8px 0 12px">Мы ответим в рабочее время.</p>
       <form id="briefForm" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
         <input name="name" placeholder="Имя" required aria-label="Имя"/>
         <input name="email" type="email" placeholder="Email" required aria-label="Email"/>
@@ -325,13 +326,12 @@ result = product(ROI &gt;= 2.4);
     </div>
   </div>
 
-  <!-- MODAL: Requisites -->
-  <div class="modal" id="modalReq" role="dialog" aria-modal="true" aria-labelledby="reqTitle">
-    <div class="dialog">
-      <header>
-        <h3 id="reqTitle" style="margin:0">Реквизиты (пример)</h3>
-        <button class="btn close" id="btnCloseReq" aria-label="Закрыть">✕</button>
-      </header>
+  <div class="modal" id="modalReq" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:200">
+    <div class="paper" style="width:min(640px,92vw)">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+        <h3 style="margin:0">Реквизиты (пример)</h3>
+        <button class="btn" id="btnCloseReq">Закрыть</button>
+      </div>
       <div style="display:grid;gap:6px;margin-top:8px">
         <div><strong>ООО «Небула Тех»</strong></div>
         <div class="mut">ИНН 7723456789 · КПП 770301001 · ОГРН 1234567890123</div>
@@ -342,30 +342,53 @@ result = product(ROI &gt;= 2.4);
     </div>
   </div>
 
-  <!-- MODAL: Policy -->
-  <div class="modal" id="modalPolicy" role="dialog" aria-modal="true" aria-labelledby="polTitle">
-    <div class="dialog">
-      <header>
-        <h3 id="polTitle" style="margin:0">Политика конфиденциальности</h3>
-        <button class="btn close" id="btnClosePolicy" aria-label="Закрыть">✕</button>
-      </header>
-      <p class="mut">Мы собираем имя и email только для связи по заявке. Данные не передаются третьим лицам, срок хранения 12 месяцев.</p>
+  <div class="modal" id="modalApi" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:200">
+    <div class="paper" style="width:min(760px,92vw)">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3 style="margin:0">API пример</h3><button class="btn" id="btnCloseApi">Закрыть</button></div>
+      <pre class="paper" style="overflow:auto;max-height:320px"><code>POST /v1/lead
+{
+  "name":"Иван",
+  "email":"ivan@example.com",
+  "goal":"MVP e‑commerce"
+}
+// 201 Created → id: "ld_01HX"
+</code></pre>
+    </div>
+  </div>
+
+  <div class="modal" id="modalInfra" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:200">
+    <div class="paper" style="width:min(760px,92vw)">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3 style="margin:0">Диаграмма инфраструктуры</h3><button class="btn" id="btnCloseInfra">Закрыть</button></div>
+      <svg viewBox="0 0 720 300" width="100%" height="300" aria-label="Диаграмма">
+        <rect x="20" y="40" width="200" height="80" rx="10" fill="#eef4ff" stroke="var(--line)"/>
+        <text x="120" y="85" text-anchor="middle" font-size="14">Frontend · Vercel</text>
+        <rect x="260" y="40" width="200" height="80" rx="10" fill="#e6fbff" stroke="var(--line)"/>
+        <text x="360" y="85" text-anchor="middle" font-size="14">API · FastAPI</text>
+        <rect x="500" y="40" width="200" height="80" rx="10" fill="#fff" stroke="var(--line)"/>
+        <text x="600" y="85" text-anchor="middle" font-size="14">Workers · Queue</text>
+        <rect x="260" y="170" width="200" height="80" rx="10" fill="#fff" stroke="var(--line)"/>
+        <text x="360" y="215" text-anchor="middle" font-size="14">DB · PostgreSQL</text>
+        <rect x="500" y="170" width="200" height="80" rx="10" fill="#fff" stroke="var(--line)"/>
+        <text x="600" y="215" text-anchor="middle" font-size="14">Cache · Redis</text>
+        <line x1="220" y1="80" x2="260" y2="80" stroke="#cbd5e1"/>
+        <line x1="460" y1="80" x2="500" y2="80" stroke="#cbd5e1"/>
+        <line x1="360" y1="120" x2="360" y2="170" stroke="#cbd5e1"/>
+        <line x1="600" y1="120" x2="600" y2="170" stroke="#cbd5e1"/>
+      </svg>
     </div>
   </div>
 
   <script>
-    // Splash remove after delay
+    // Splash
     const splash = document.getElementById('splash');
-    setTimeout(()=>{ splash.classList.add('hide'); setTimeout(()=>splash.remove(), 900); }, 1300);
+    setTimeout(()=>{ splash.classList.add('hide'); setTimeout(()=>splash.remove(), 900); }, 1200);
 
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Reveal on scroll + slide-in
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} })
-    },{threshold:.12});
-    document.querySelectorAll('.reveal').forEach(n=>io.observe(n));
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } }) }, {threshold:.15});
+    document.querySelectorAll('.reveal, .paper, .card, .shot, .stat, .doc, .partner').forEach(n=>io.observe(n));
 
     // Counters
     const counters = document.querySelectorAll('[data-counter]');
@@ -378,34 +401,27 @@ result = product(ROI &gt;= 2.4);
     },{threshold:.4});
     counters.forEach(el=>io2.observe(el));
 
-    // Smooth snap for menu clicks (ensure exact align)
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
-        const id = a.getAttribute('href').slice(1);
-        const target = document.getElementById(id);
-        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
-      });
+    // Modals open/close
+    const modal = (id)=>document.getElementById(id);
+    const open = (m)=>{ m.style.display='grid'; };
+    const close= (m)=>{ m.style.display='none'; };
+
+    document.getElementById('btnBrief')?.addEventListener('click', ()=>open(modal('modalBrief')));
+    document.getElementById('btnOpenBrief2')?.addEventListener('click', ()=>open(modal('modalBrief')));
+    document.getElementById('btnContact')?.addEventListener('click', ()=>open(modal('modalBrief')));
+    document.getElementById('btnRequisites')?.addEventListener('click', ()=>open(modal('modalReq')));
+    document.getElementById('btnApi')?.addEventListener('click', ()=>open(modal('modalApi')));
+    document.getElementById('btnInfra')?.addEventListener('click', ()=>open(modal('modalInfra')));
+
+    document.getElementById('btnCloseBrief')?.addEventListener('click', ()=>close(modal('modalBrief')));
+    document.getElementById('btnCloseReq')?.addEventListener('click', ()=>close(modal('modalReq')));
+    document.getElementById('btnCloseApi')?.addEventListener('click', ()=>close(modal('modalApi')));
+    document.getElementById('btnCloseInfra')?.addEventListener('click', ()=>close(modal('modalInfra')));
+
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ ['modalBrief','modalReq','modalApi','modalInfra'].forEach(id=>close(modal(id))); }});
+    ['modalBrief','modalReq','modalApi','modalInfra'].forEach(id=>{
+      const m = modal(id); m.addEventListener('click', e=>{ if(e.target===m) close(m); });
     });
-
-    // Modals
-    const modalBrief = document.getElementById('modalBrief');
-    const modalReq   = document.getElementById('modalReq');
-    const modalPolicy= document.getElementById('modalPolicy');
-    const open = (m)=>m.classList.add('open');
-    const close= (m)=>m.classList.remove('open');
-
-    document.getElementById('btnBrief')?.addEventListener('click', ()=>open(modalBrief));
-    document.getElementById('btnOpenModal')?.addEventListener('click', ()=>open(modalBrief));
-    document.getElementById('btnBrief2')?.addEventListener('click', ()=>open(modalBrief));
-    document.getElementById('btnContact')?.addEventListener('click', ()=>open(modalBrief));
-    document.getElementById('btnRequisites')?.addEventListener('click', ()=>open(modalReq));
-    document.getElementById('btnRequisites2')?.addEventListener('click', ()=>open(modalReq));
-    document.getElementById('btnPolicy')?.addEventListener('click', ()=>open(modalPolicy));
-    document.getElementById('btnCloseBrief')?.addEventListener('click', ()=>close(modalBrief));
-    document.getElementById('btnCloseReq')?.addEventListener('click', ()=>close(modalReq));
-    document.getElementById('btnClosePolicy')?.addEventListener('click', ()=>close(modalPolicy));
-    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ close(modalBrief); close(modalReq); close(modalPolicy); }});
-    [modalBrief, modalReq, modalPolicy].forEach(m=> m.addEventListener('click', e=>{ if(e.target===m){ close(m); }}));
 
     // Brief fake submit
     const form = document.getElementById('briefForm');
@@ -420,22 +436,30 @@ result = product(ROI &gt;= 2.4);
       form.reset();
     });
 
-    // Simple price calculator
-    const r1 = document.getElementById('r1');
-    const r2 = document.getElementById('r2');
-    const r3 = document.getElementById('r3');
-    const r1v= document.getElementById('r1v');
-    const r2v= document.getElementById('r2v');
-    const r3v= document.getElementById('r3v');
-    const priceEl = document.getElementById('price');
-    function recalc(){
-      r1v.textContent=r1.value; r2v.textContent=r2.value; r3v.textContent=r3.value;
-      const base = 90000;
-      const p = base + r1.value*20000 + r2.value*35000 + r3.value*80000;
-      priceEl.textContent = new Intl.NumberFormat('ru-RU').format(p) + ' ₽';
+    // Charts logic
+    const line = document.getElementById('poly');
+    const a = document.getElementById('a');
+    const b = document.getElementById('b');
+    const c = document.getElementById('c');
+    function drawLine(){
+      const pts = [20, a.value, 40, b.value, 60, c.value, 80, ( +a.value + +b.value + +c.value )/3];
+      const xy = pts.map((v,i)=> i%2===0 ? 40+v*6.5 : 200 - v*1.5 );
+      line.setAttribute('points', `${xy[0]},${xy[1]} ${xy[2]},${xy[3]} ${xy[4]},${xy[5]} ${xy[6]},${xy[7]}`);
     }
-    [r1,r2,r3].forEach(i=> i?.addEventListener('input', recalc));
-    recalc();
+    [a,b,c].forEach(i=> i?.addEventListener('input', drawLine));
+    drawLine();
+
+    const barsG = document.getElementById('bars');
+    const barsInput = document.getElementById('barsInput');
+    function drawBars(){
+      const base = +barsInput.value; barsG.innerHTML=''; const xs=[40,100,160,220];
+      xs.forEach((x,idx)=>{ const h = base + idx*10; const y = 220 - h*1.4; const color = idx%2? '#0ea5e9':'#2563eb';
+        const r = document.createElementNS('http://www.w3.org/2000/svg','rect');
+        r.setAttribute('x', x); r.setAttribute('y', y); r.setAttribute('width', 32); r.setAttribute('height', 220-y); r.setAttribute('rx', 6); r.setAttribute('fill', color);
+        r.setAttribute('opacity','0.9'); barsG.appendChild(r);
+      });
+    }
+    barsInput?.addEventListener('input', drawBars); drawBars();
   </script>
 </body>
 </html>
