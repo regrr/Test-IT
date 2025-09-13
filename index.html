@@ -15,38 +15,58 @@
   --r:16px; --shadow:0 18px 48px rgba(16,24,40,.08); --container:1240px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+a{color:inherit;text-decoration:none}
 html,body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;scroll-behavior:smooth}
 main{scroll-snap-type:y mandatory}
 section{min-height:100svh;scroll-snap-align:start;display:flex;align-items:center;padding:84px 0}
 .container{max-width:var(--container);margin:0 auto;padding:0 20px}
 
-/* Light ref-геро фон + сетка */
-.hero-bg{position:fixed;inset:0;z-index:-2;background:
- radial-gradient(1200px 600px at 50% -10%, rgba(36,60,255,.18), transparent 55%),
- linear-gradient(180deg,#eef3ff 0%,rgba(238,243,255,0) 35%);}
-.grid-overlay{position:fixed;inset:0;z-index:-1;opacity:.35;mask-image:linear-gradient(#000,transparent 70%)}
-.grid-overlay canvas{width:100%;height:100%}
+/* Dynamic light hero background */
+.hero-bg{
+  position:fixed; inset:0; z-index:-3;
+  background:
+    radial-gradient(900px 480px at var(--mx,50%) var(--my,22%), rgba(36,60,255,.22), transparent 60%),
+    radial-gradient(1200px 700px at 50% -10%, rgba(122,162,255,.18), transparent 65%),
+    linear-gradient(180deg,#eef3ff 0%, rgba(238,243,255,0) 40%);
+}
+/* noise veil */
+.bg-noise{ position:fixed; inset:0; z-index:-2; opacity:.05; pointer-events:none }
+.bg-noise:before{
+  content:""; position:absolute; inset:-50%;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.35'/></svg>");
+  animation:drift 30s linear infinite;
+}
+@keyframes drift{to{transform:translate3d(25%,25%,0)}}
+/* cursor spotlight layer */
+.cursor-spot{ position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:radial-gradient(200px 200px at var(--mx,50%) var(--my,22%), rgba(36,60,255,.20), transparent 60%);
+  mix-blend-mode:multiply;
+}
 
-/* Header pills */
+/* header */
 header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.9);backdrop-filter:saturate(130%) blur(10px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px;color:#0e1320}
 .brand svg{flex:0 0 32px}
 .menu{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.menu a,.menu button.pill{padding:10px 14px;border-radius:999px;background:var(--pill);color:#0e1320cc;border:1px solid var(--line);font-weight:600}
+.menu a,.menu button.pill{
+  padding:10px 16px;border-radius:999px;background:var(--pill);color:#0e1320cc;border:1px solid var(--line);
+  font-weight:600;transition:box-shadow .2s, background .2s, transform .08s
+}
+.menu a:hover,.menu button.pill:hover{box-shadow:0 10px 26px rgba(36,60,255,.14);background:#f5f7ff}
+.menu a:active,.menu button.pill:active{transform:translateY(1px)}
 .menu a.active{background:linear-gradient(90deg,#eaf0ff,#f7f9ff);border-color:#d7def0;color:var(--ink)}
-.menu a:hover,.menu button.pill:hover{box-shadow:0 8px 24px rgba(36,60,255,.12)}
 .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;font-weight:700;border:0;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 14px 40px rgba(36,60,255,.28)}
 .btn.light{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:0 8px 24px rgba(15,23,42,.06)}
 
-/* Dropdown */
+/* dropdown */
 .dropdown{position:relative}
 .drop{position:absolute;top:110%;left:0;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:10px;display:none;min-width:300px}
-.drop a{display:flex;gap:8px;align-items:center;padding:10px;border-radius:10px;color:var(--ink)}
+.drop a{display:flex;gap:8px;align-items:center;padding:10px;border-radius:10px}
 .drop a:hover{background:#f6f8ff}
 .dropdown.open .drop{display:block}
 
-/* Blocks */
+/* blocks */
 .paper{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px}
 .kicker{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--mut)}
 h1{font-size:clamp(34px,6vw,72px);font-weight:700;letter-spacing:-.02em;line-height:1.06;margin:12px 0}
@@ -65,18 +85,18 @@ p{line-height:1.6}
 .cursor{display:inline-block;width:10px;background:var(--acc);animation:blink 1.1s infinite}
 @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
 
-/* Shots */
+/* shots */
 .shots{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .shot{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
 .shot img{width:100%;height:260px;object-fit:cover;display:block}
 .shot .lbl{position:absolute;left:10px;top:10px}
 
-/* Stats */
+/* stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
 .stat strong{display:block;font-size:clamp(24px,3.4vw,32px)}
 
-/* Charts */
+/* charts */
 .charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .chart{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
 
@@ -88,17 +108,17 @@ p{line-height:1.6}
 .faq summary:after{content:"▾";float:right;transition:.2s}
 .faq details[open] summary:after{transform:rotate(180deg)}
 
-/* Arrow + progress */
+/* arrow + progress */
 .scrollHint{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:900;display:flex;flex-direction:column;align-items:center;gap:6px}
 .scrollHint button{width:46px;height:46px;border-radius:999px;border:1px solid var(--line);background:#fff;box-shadow:0 10px 28px rgba(0,0,0,.08);cursor:pointer;font-size:18px;color:var(--acc);animation:bob 1.6s ease-in-out infinite}
 .scrollHint .txt{font-size:12px;color:var(--mut)}
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 .progress{position:fixed;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));transform-origin:left;transform:scaleX(0);z-index:1200}
 
-/* Footer */
+/* footer */
 footer{padding:28px 0;border-top:1px solid var(--line);background:#fff;color:var(--mut)}
 
-/* Responsive */
+/* responsive */
 @media (max-width:1100px){.grid-hero{grid-template-columns:1fr}.shots{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}.charts{grid-template-columns:1fr}}
 @media (max-width:720px){
   .menu{gap:8px}
@@ -111,6 +131,8 @@ footer{padding:28px 0;border-top:1px solid var(--line);background:#fff;color:var
 </head>
 <body>
 <div class="hero-bg"></div>
+<div class="bg-noise"></div>
+<div class="cursor-spot"></div>
 <div class="grid-overlay"><canvas id="grid"></canvas></div>
 <div class="progress" id="progress"></div>
 
@@ -209,7 +231,7 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
     </div>
   </section>
 
-  <!-- SOLUTIONS (mini-apps/боты как в старой версии) -->
+  <!-- SOLUTIONS -->
   <section id="solutions">
     <div class="container">
       <div class="paper">
@@ -244,7 +266,7 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
     </div>
   </section>
 
-  <!-- STACK + интеграции (партнёры) -->
+  <!-- PARTNERS/STACK -->
   <section id="partners">
     <div class="container">
       <div class="paper">
@@ -259,7 +281,7 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
     </div>
   </section>
 
-  <!-- PROCESS + ANALYTICS (с графиками из твоей версии) -->
+  <!-- PROCESS + ANALYTICS -->
   <section id="process">
     <div class="container">
       <div class="paper">
@@ -308,7 +330,7 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
     </div>
   </section>
 
-  <!-- FAQ + CONTACT -->
+  <!-- CONTACT -->
   <section id="contact">
     <div class="container">
       <div class="paper">
@@ -372,12 +394,27 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
 </div>
 
 <script>
-// grid overlay
+// grid overlay with parallax
 (function(){
   const c=document.getElementById('grid');
-  function draw(){const ctx=c.getContext('2d');const w=c.width=innerWidth,h=c.height=innerHeight;ctx.clearRect(0,0,w,h);ctx.strokeStyle='#dfe6ff';ctx.globalAlpha=.35;ctx.lineWidth=1;const step=48;for(let x=0;x<w;x+=step){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}for(let y=0;y<h;y+=step){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}}
+  function draw(){
+    const ctx=c.getContext('2d');
+    const w=c.width=innerWidth, h=c.height=innerHeight;
+    ctx.clearRect(0,0,w,h);
+    ctx.strokeStyle='#dfe6ff'; ctx.globalAlpha=.35; ctx.lineWidth=1;
+    const step=48;
+    for(let x=0;x<w;x+=step){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}
+    for(let y=0;y<h;y+=step){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+  }
   addEventListener('resize',draw); draw();
+  addEventListener('scroll',()=>{const t=scrollY*0.06; c.style.transform=`translate3d(0,${t}px,0)`},{passive:true});
 })();
+
+// cursor spotlight coordinates
+const root=document.documentElement;
+function setVars(x,y){root.style.setProperty('--mx',x+'%');root.style.setProperty('--my',y+'%')}
+addEventListener('pointermove', e=>{setVars((e.clientX/innerWidth)*100,(e.clientY/innerHeight)*100)});
+setVars(50,22);
 
 // dropdown
 const dd=document.getElementById('dd');
@@ -392,7 +429,7 @@ sections.forEach(s=>io.observe(s));
 const progress=document.getElementById('progress');
 addEventListener('scroll',()=>{const m=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${Math.max(0,Math.min(1,scrollY/m))})`},{passive:true});
 
-// snap assist (нет «полуэкранов»)
+// snap assist
 let t=null;
 function snap(){const vh=innerHeight;let best=null,dist=1e9;for(const s of sections){const d=Math.abs(s.getBoundingClientRect().top);if(d<dist){dist=d;best=s}} if(best&&dist>vh*.08) best.scrollIntoView({behavior:'smooth',block:'start'})}
 addEventListener('scroll',()=>{clearTimeout(t);t=setTimeout(snap,120)},{passive:true});
@@ -421,7 +458,6 @@ form?.addEventListener('submit',async e=>{e.preventDefault(); const data=Object.
 const a=document.getElementById('a'), b=document.getElementById('b'), c=document.getElementById('c'), poly=document.getElementById('poly');
 function drawLine(){const vals=[+a.value,(a.value*0.6+b.value*0.4),+b.value,(b.value*0.6+c.value*0.4),+c.value,+c.value+10].slice(0,6); const pts=vals.map((v,i)=>`${40+i*104},${200-(v/100)*140}`).join(' '); poly.setAttribute('points',pts)}
 [a,b,c].forEach(el=>el?.addEventListener('input',drawLine)); drawLine();
-
 const donut={total:2*Math.PI*80, els:[document.getElementById('d1'),document.getElementById('d2'),document.getElementById('d3')]};
 const dn1=document.getElementById('dn1'), dn2=document.getElementById('dn2'), dn3=document.getElementById('dn3'), dLabel=document.getElementById('donutLabel');
 function drawDonut(){const v1=+dn1.value,v2=+dn2.value,v3=+dn3.value,sum=Math.max(1,v1+v2+v3); const a1=donut.total*(v1/sum),a2=donut.total*(v2/sum),a3=donut.total*(v3/sum);
