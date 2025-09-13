@@ -10,9 +10,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#f5f7fb; --paper:#ffffff; --ink:#0f172a; --mut:#5b6472; --line:#e6e9f0;
-      --acc:#2563eb; --acc2:#0ea5e9; --ok:#16a34a; --warn:#d97706; --err:#dc2626; --br:14px;
-      --spot-x:50%; --spot-y:0%;
+     /* Mobile text safety */
+  .paper, .paper p, h1, h2, h3 { word-break: break-word; overflow-wrap: anywhere; }
+  h1{ font-size:clamp(26px,4.6vw,48px); line-height:1.2; }
+  @media (max-width:640px){
+  h1{ font-size:clamp(22px,7vw,34px); line-height:1.25; }
+  .codecard{ font-size:11.5px; }
+  }
+/* Чуть мягче прокрутка и без полу-экранов */
+  html,body{ overscroll-behavior-y: contain; }
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -349,51 +355,27 @@ ai:    assistants(rag,tool-use)
 
     <!-- SLIDE: PARTNERS -->
     <section id="partners" class="slide section">
-      <div class="container">
-        <div class="paper reveal">
-          <h2>Партнёры</h2>
-          <p class="mut">Единая стилистика логотипов. Интеграции и поставщики.</p>
-          <div class="partners" style="margin-top:10px">
-            <div class="partner" title="NorthWind">
-              <svg viewBox="0 0 120 28" aria-hidden="true"><path class="mark" d="M10 20 L30 8 L50 20 M60 20 L80 8 L100 20"/></svg>
-            </div>
-            <div class="partner" title="Volta Cloud">
-              <svg viewBox="0 0 120 28"><circle class="mark" cx="20" cy="14" r="8"/><path class="mark" d="M34 14 H100"/></svg>
-            </div>
-            <div class="partner" title="Sigma Data">
-              <svg viewBox="0 0 120 28"><path class="mark" d="M12 8 H40 L20 20 H48"/></svg>
-            </div>
-            <div class="partner" title="Kappa CRM">
-              <svg viewBox="0 0 120 28"><path class="mark" d="M12 20 V8 L36 20 V8"/></svg>
-            </div>
-            <div class="partner" title="OmniPay">
-              <svg viewBox="0 0 120 28"><rect class="mark" x="10" y="8" width="40" height="12" rx="3"/></svg>
-            </div>
-            <div class="partner" title="StreamQueue">
-              <svg viewBox="0 0 120 28"><path class="mark" d="M12 10 H50 M12 14 H60 M12 18 H70"/></svg>
-            </div>
-            <div class="partner" title="LedgerX">
-              <svg viewBox="0 0 120 28"><path class="mark" d="M12 8 V20 H40"/></svg>
-            </div>
-            <div class="partner" title="FormBee">
-              <svg viewBox="0 0 120 28"><polygon class="mark" points="20,8 32,14 20,20 8,14 20,8"/></svg>
-            </div>
-            <div class="partner" title="MailJet">
-              <svg viewBox="0 0 120 28"><path class="mark" d="M12 10 L32 20 L52 10"/></svg>
-            </div>
-            <div class="partner" title="GeoIPX">
-              <svg viewBox="0 0 120 28"><circle class="mark" cx="20" cy="14" r="8"/><path class="mark" d="M20 6 V22"/></svg>
-            </div>
-            <div class="partner" title="AuthKit">
-              <svg viewBox="0 0 120 28"><rect class="mark" x="12" y="8" width="20" height="12" rx="2"/><path class="mark" d="M38 14 H60"/></svg>
-            </div>
-            <div class="partner" title="ClickHouseCloud">
-              <svg viewBox="0 0 120 28"><path class="mark" d="M12 8 V20 M24 8 V20 M36 8 V20"/></svg>
-            </div>
-          </div>
-        </div>
+  <div class="container">
+    <div class="paper reveal">
+      <h2>Партнёры</h2>
+      <p class="mut">Интеграции с облаком, платёжами, почтой, аналитикой. Единая монохромная стилистика.</p>
+      <div class="partners" style="margin-top:10px">
+        <div class="partner" title="NorthWind"><svg viewBox="0 0 140 32"><path class="mark" d="M12 22 L36 10 L60 22 M72 22 L96 10 L120 22"/></svg></div>
+        <div class="partner" title="Volta Cloud"><svg viewBox="0 0 140 32"><circle class="mark" cx="24" cy="16" r="9"/><path class="mark" d="M40 16 H120"/></svg></div>
+        <div class="partner" title="Sigma Data"><svg viewBox="0 0 140 32"><path class="mark" d="M18 10 H58 L36 22 H64"/></svg></div>
+        <div class="partner" title="Kappa CRM"><svg viewBox="0 0 140 32"><path class="mark" d="M18 22 V10 L48 22 V10"/></svg></div>
+        <div class="partner" title="OmniPay"><svg viewBox="0 0 140 32"><rect class="mark" x="16" y="10" width="48" height="14" rx="3"/></svg></div>
+        <div class="partner" title="StreamQueue"><svg viewBox="0 0 140 32"><path class="mark" d="M16 12 H70 M16 16 H90 M16 20 H110"/></svg></div>
+        <div class="partner" title="LedgerX"><svg viewBox="0 0 140 32"><path class="mark" d="M18 10 V22 H56"/></svg></div>
+        <div class="partner" title="FormBee"><svg viewBox="0 0 140 32"><polygon class="mark" points="28,10 42,16 28,22 14,16 28,10"/></svg></div>
+        <div class="partner" title="MailJet"><svg viewBox="0 0 140 32"><path class="mark" d="M16 12 L42 22 L68 12"/></svg></div>
+        <div class="partner" title="GeoIPX"><svg viewBox="0 0 140 32"><circle class="mark" cx="24" cy="16" r="9"/><path class="mark" d="M24 7 V25"/></svg></div>
+        <div class="partner" title="AuthKit"><svg viewBox="0 0 140 32"><rect class="mark" x="16" y="10" width="24" height="14" rx="2"/><path class="mark" d="M46 16 H92"/></svg></div>
+        <div class="partner" title="ClickHouseCloud"><svg viewBox="0 0 140 32"><path class="mark" d="M16 10 V22 M30 10 V22 M44 10 V22"/></svg></div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <!-- SLIDE: DOCS -->
     <section id="docs" class="slide section">
@@ -447,7 +429,10 @@ ai:    assistants(rag,tool-use)
   </footer>
 
   <button class="btn toTop" id="toTop" aria-label="Вверх">↑</button>
-  <div class="scrollHint" id="scrollHint"><button class="arrow" aria-label="Вниз">▼</button></div>
+  <div class="scrollHint" id="scrollHint">
+  <button class="arrow" aria-label="Листать вниз" title="Листайте вниз или нажмите">▼</button>
+  <div style="text-align:center;font-size:12px;color:var(--mut);margin-top:6px">Листать</div>
+</div>
 
   <!-- MODALS -->
   <div class="modal" id="modalBrief" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:1200">
@@ -524,85 +509,41 @@ ai:    assistants(rag,tool-use)
   </div>
 
   <script>
-    // Progress bar
-    const prog = document.getElementById('progress');
-    const updateProgress = ()=>{ const h = document.documentElement; const sc = h.scrollTop; const th = h.scrollHeight - h.clientHeight; prog.style.transform = `scaleX(${th? sc/th : 0})`; };
-    document.addEventListener('scroll', updateProgress, {passive:true}); updateProgress();
+    /* Snap-to-slide при остановке прокрутки (touch + wheel) */
+const slides = Array.from(document.querySelectorAll('.slide'));
+let snapTimer = null;
+function snapToNearest(){
+  const vh = innerHeight;
+  let best = null, bestDist = 1e9;
+  for (const s of slides){
+    const d = Math.abs(s.getBoundingClientRect().top);
+    if (d < bestDist){ best = s; bestDist = d; }
+  }
+  if (best && bestDist > vh * 0.08){
+    best.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+addEventListener('scroll', () => {
+  clearTimeout(snapTimer);
+  snapTimer = setTimeout(snapToNearest, 120);
+}, { passive: true });
 
-    // Spotlight follow cursor
-    const spot = document.getElementById('spot');
-    window.addEventListener('mousemove', (e)=>{ const x = (e.clientX / innerWidth)*100; const y = (e.clientY / innerHeight)*100; spot.style.setProperty('--spot-x', x + '%'); spot.style.setProperty('--spot-y', y + '%'); }, {passive:true});
-
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Reveal on scroll
-    const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } }) }, {threshold:.15});
-    document.querySelectorAll('.reveal, .paper, .card, .shot, .doc, .partner').forEach(n=>io.observe(n));
-
-    // Back to top
-    const toTop = document.getElementById('toTop');
-    window.addEventListener('scroll',()=>{ scrollY>600 ? toTop.classList.add('show') : toTop.classList.remove('show'); });
-    toTop.addEventListener('click', ()=>scrollTo({top:0, behavior:'smooth'}));
-
-    // Modals open/close
-    const modal = (id)=>document.getElementById(id);
-    const open = (m)=>{ m.style.display='grid'; };
-    const close= (m)=>{ m.style.display='none'; };
-    document.getElementById('btnBrief')?.addEventListener('click', ()=>open(modal('modalBrief')));
-    document.getElementById('btnContact')?.addEventListener('click', ()=>open(modal('modalBrief')));
-    document.getElementById('btnContact2')?.addEventListener('click', ()=>open(modal('modalBrief')));
-    document.getElementById('btnRequisites')?.addEventListener('click', ()=>open(modal('modalReq')));
-    document.getElementById('btnApi')?.addEventListener('click', ()=>open(modal('modalApi')));
-    document.getElementById('btnInfra')?.addEventListener('click', ()=>open(modal('modalInfra')));
-    document.getElementById('btnPolicy')?.addEventListener('click', ()=>alert('Краткая политика: собираем минимум данных, храним ограниченно, доступ по роли.'));
-    document.getElementById('btnLegal')?.addEventListener('click', ()=>alert('Юридические контуры: Договор, DPA, SLA/OLA, ИС у Заказчика.'));
-
-    document.getElementById('btnCloseBrief')?.addEventListener('click', ()=>close(modal('modalBrief')));
-    document.getElementById('btnCloseReq')?.addEventListener('click', ()=>close(modal('modalReq')));
-    document.getElementById('btnCloseApi')?.addEventListener('click', ()=>close(modal('modalApi')));
-    document.getElementById('btnCloseInfra')?.addEventListener('click', ()=>close(modal('modalInfra')));
-    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ ['modalBrief','modalReq','modalApi','modalInfra'].forEach(id=>close(modal(id))); }});
-    ['modalBrief','modalReq','modalApi','modalInfra'].forEach(id=>{ const m = modal(id); m.addEventListener('click', e=>{ if(e.target===m) close(m); }); });
-
-    // Brief fake submit
-    const form = document.getElementById('briefForm');
-    const msg  = document.getElementById('formMsg');
-    form?.addEventListener('submit', async (e)=>{ e.preventDefault(); const data = Object.fromEntries(new FormData(form).entries()); msg.textContent = 'Отправка…'; await new Promise(r=>setTimeout(r,700)); console.log('BRIEF', data); msg.textContent = 'Готово. Мы свяжемся в течение рабочего дня.'; form.reset(); });
-
-    // Charts logic
-    const line = document.getElementById('poly');
-    const a = document.getElementById('a');
-    const b = document.getElementById('b');
-    const c = document.getElementById('c');
-    function drawLine(){ const pts = [20, a.value, 40, b.value, 60, c.value, 80, ( +a.value + +b.value + +c.value )/3]; const xy = pts.map((v,i)=> i%2===0 ? 40+v*6.5 : 200 - v*1.5 ); line.setAttribute('points', `${xy[0]},${xy[1]} ${xy[2]},${xy[3]} ${xy[4]},${xy[5]} ${xy[6]},${xy[7]}`); }
-    [a,b,c].forEach(i=> i?.addEventListener('input', drawLine)); drawLine();
-
-    const barsG = document.getElementById('bars');
-    const barsInput = document.getElementById('barsInput');
-    function drawBars(){ const base = +barsInput.value; barsG.innerHTML=''; const xs=[40,100,160,220]; xs.forEach((x,idx)=>{ const h = base + idx*10; const y = 220 - h*1.4; const color = idx%2? '#0ea5e9':'#2563eb'; const r = document.createElementNS('http://www.w3.org/2000/svg','rect'); r.setAttribute('x', x); r.setAttribute('y', y); r.setAttribute('width', 32); r.setAttribute('height', 220-y); r.setAttribute('rx', 6); r.setAttribute('fill', color); r.setAttribute('opacity','0.9'); barsG.appendChild(r); }); }
-    barsInput?.addEventListener('input', drawBars); drawBars();
-
-    const d1 = document.getElementById('d1');
-    const d2 = document.getElementById('d2');
-    const d3 = document.getElementById('d3');
-    const dn1 = document.getElementById('dn1');
-    const dn2 = document.getElementById('dn2');
-    const dn3 = document.getElementById('dn3');
-    const donutLabel = document.getElementById('donutLabel');
-    function drawDonut(){ const v1=+dn1.value, v2=+dn2.value, v3=+dn3.value; const sum=Math.max(1, v1+v2+v3); const circ = 2*Math.PI*80; const a1 = circ*(v1/sum), a2=circ*(v2/sum), a3=circ*(v3/sum); d1.setAttribute('stroke-dasharray', `${a1} ${circ-a1}`); d2.setAttribute('stroke-dasharray', `${a2} ${circ-a2}`); d2.style.strokeDashoffset = -a1; d3.setAttribute('stroke-dasharray', `${a3} ${circ-a3}`); d3.style.strokeDashoffset = -(a1+a2); donutLabel.textContent = `Total ${sum}`; }
-    ;[dn1,dn2,dn3].forEach(i=> i?.addEventListener('input', drawDonut)); drawDonut();
-
-    // Down arrow to next slide
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    const hint = document.getElementById('scrollHint');
-    let currentSlideIndex = 0;
-    const ioSlide = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ currentSlideIndex = slides.indexOf(e.target); hint.style.display = currentSlideIndex === slides.length-1 ? 'none' : 'block'; } });
-    },{threshold:.6});
-    slides.forEach(s=>ioSlide.observe(s));
-    hint.querySelector('button').addEventListener('click', ()=>{ const next = slides[Math.min(slides.length-1, currentSlideIndex+1)]; next?.scrollIntoView({behavior:'smooth', block:'start'}); });
-
+/* Логика стрелки вниз + индикатор видимости */
+const hint = document.getElementById('scrollHint');
+let currentSlideIndex = 0;
+const ioSlide = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      currentSlideIndex = slides.indexOf(e.target);
+      hint.style.display = currentSlideIndex === slides.length - 1 ? 'none' : 'block';
+    }
+  });
+},{threshold:.7});
+slides.forEach(s=>ioSlide.observe(s));
+hint.querySelector('button').addEventListener('click', ()=>{
+  const next = slides[Math.min(slides.length-1, currentSlideIndex+1)];
+  next?.scrollIntoView({behavior:'smooth', block:'start'});
+});
   </script>
 </body>
 </html>
