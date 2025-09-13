@@ -129,6 +129,72 @@
   <script type="application/ld+json">{
     "@context":"https://schema.org","@type":"Organization","name":"NEBULA IT","url":"https://nebula.example","logo":"/favicon.svg","slogan":"Создаём измеримый цифровой эффект","sameAs":["https://t.me/nebula","https://github.com/nebula"],"department":{"@type":"WebSite","name":"NEBULA IT","url":"https://nebula.example","potentialAction":{"@type":"SearchAction","target":"https://nebula.example/?q={search_term_string}","query-input":"required name=search_term_string"}}}
   </script>
+  <!-- Favicon, PWA и пакет логотипа -->
+  <meta name="theme-color" content="#2563eb"/>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><defs><linearGradient id="g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs><rect x="0" y="0" width="36" height="36" rx="10" fill="url(#g)"/><path d="M18 9 L19.8 15.2 L26 17 L19.8 18.8 L18 25 L16.2 18.8 L10 17 L16.2 15.2 Z" fill="#0f172a"/><path d="M28 22a10 10 0 1 1-6-12" fill="none" stroke="#0f172a" stroke-width="2" opacity=".4"/></svg>'/>
+  <link rel="mask-icon" color="#2563eb" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><rect x="0" y="0" width="36" height="36" rx="10" fill="#000"/></svg>'/>
+  <link rel="apple-touch-icon" href="#" id="apple-touch"/>
+
+  <!-- Встроенный SVG-набор логотипа: mark, wordmark, lockup -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="nebula-mark" viewBox="0 0 36 36">
+      <defs>
+        <linearGradient id="nebula-g" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" stop-color="#2563eb"/>
+          <stop offset="1" stop-color="#0ea5e9"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="36" height="36" rx="10" fill="url(#nebula-g)"/>
+      <path d="M18 9 L19.8 15.2 L26 17 L19.8 18.8 L18 25 L16.2 18.8 L10 17 L16.2 15.2 Z" fill="#0f172a"/>
+      <path d="M28 22a10 10 0 1 1-6-12" fill="none" stroke="#0f172a" stroke-width="2" opacity=".4"/>
+    </symbol>
+    <symbol id="nebula-word" viewBox="0 0 420 36">
+      <text x="0" y="26" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto" font-weight="600" font-size="28" letter-spacing=".02em" fill="#0f172a">NEBULA IT</text>
+    </symbol>
+    <symbol id="nebula-lockup" viewBox="0 0 476 36">
+      <use href="#nebula-mark"/>
+      <use href="#nebula-word" x="56"/>
+    </symbol>
+  </svg>
+
+  <!-- Генерация webmanifest и PWA-иконок из SVG на лету + SW -->
+  <script>
+    (function(){
+      const svgMark = `<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 36 36\"><defs><linearGradient id=\"g\" x1=\"0\" y1=\"1\" x2=\"1\" y2=\"0\"><stop offset=\"0\" stop-color=\"#2563eb\"/><stop offset=\"1\" stop-color=\"#0ea5e9\"/></linearGradient></defs><rect x=\"0\" y=\"0\" width=\"36\" height=\"36\" rx=\"10\" fill=\"url(#g)\"/><path d=\"M18 9 L19.8 15.2 L26 17 L19.8 18.8 L18 25 L16.2 18.8 L10 17 L16.2 15.2 Z\" fill=\"#0f172a\"/><path d=\"M28 22a10 10 0 1 1-6-12\" fill=\"none\" stroke=\"#0f172a\" stroke-width=\"2\" opacity=\".4\"/></svg>`;
+      function svgToPng(size){
+        const canvas = document.createElement('canvas'); canvas.width=size; canvas.height=size;
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        return new Promise(res=>{
+          img.onload = ()=>{ ctx.clearRect(0,0,size,size); ctx.drawImage(img,0,0,size,size); res(canvas.toDataURL('image/png')); };
+          img.src = 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svgMark);
+        });
+      }
+      (async ()=>{
+        const i192 = await svgToPng(192);
+        const i512 = await svgToPng(512);
+        // apple-touch-icon
+        const apple = document.getElementById('apple-touch'); if(apple) apple.href = i192;
+        // manifest
+        const manifest = { name:'NEBULA IT', short_name:'Nebula', start_url:'./', scope:'./', display:'standalone', background_color:'#f5f7fb', theme_color:'#2563eb', icons:[
+          {src:i192, sizes:'192x192', type:'image/png', purpose:'any'},
+          {src:i512, sizes:'512x512', type:'image/png', purpose:'any'}
+        ] };
+        const blob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('link'); link.rel='manifest'; link.href=url; document.head.appendChild(link);
+      })();
+
+      // Service Worker: базовый оффлайн-кеш
+      if('serviceWorker' in navigator){
+        const sw = `self.addEventListener('install',e=>{e.waitUntil(caches.open('nebula-v1').then(c=>c.addAll(['./']))); self.skipWaiting();});
+self.addEventListener('activate',e=>{e.waitUntil(self.clients.claim())});
+self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))})`;
+        const u = URL.createObjectURL(new Blob([sw],{type:'text/javascript'}));
+        navigator.serviceWorker.register(u).catch(()=>{});
+      }
+    })();
+  </script>
 </head>
 <body>
 <header class="nav" role="navigation" aria-label="Главное меню">
