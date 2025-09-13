@@ -42,10 +42,14 @@ header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.9);backdr
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
 .brand svg{flex:0 0 32px}
 .menu{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.menu a,.menu button.pill{padding:clamp(8px,1.2vw,12px) clamp(12px,2vw,16px);border-radius:999px;background:var(--pill);color:#0e1320cc;border:1px solid var(--line);font-weight:600;transition:box-shadow .2s,background .2s,transform .08s}
-.menu a:hover,.menu button.pill:hover{box-shadow:0 10px 26px rgba(36,60,255,.14);background:#f5f7ff}
-.menu a:active,.menu button.pill:active{transform:translateY(1px)}
-.menu a.active{background:linear-gradient(90deg,#eaf0ff,#f7f9ff);border-color:#d7def0;color:var(--ink)}
+.menu a,
+.menu button.pill{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:12px 20px;            /* одинаковая высота/ширина */
+  border-radius:999px;
+  font:600 16px/1 Inter, system-ui, sans-serif;
+}
+.menu button.pill::after{content:"▾"; font-size:12px; margin-left:6px;}
 .btn{display:inline-flex;align-items:center;gap:10px;padding:clamp(10px,1.4vw,12px) clamp(14px,2.2vw,18px);border-radius:999px;font-weight:700;border:0;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 14px 40px rgba(36,60,255,.28)}
 .btn.light{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:0 8px 24px rgba(15,23,42,.06)}
 /* — dropdown — */
@@ -167,25 +171,23 @@ body::before {
 <div class="progress" id="progress"></div>
 
 <header>
-  <!-- Синий круг за курсором -->
-<div class="mouse-orb" id="mouseOrb">
-  <div class="o o1"></div>
-  <div class="o o2"></div>
-</div>
   <div class="container nav">
     <a href="#hero" class="brand" aria-label="NEBULA IT">
       <svg viewBox="0 0 36 36" width="36" height="36" aria-hidden="true">
-        <defs><linearGradient id="g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#243cff"/><stop offset="1" stop-color="#7aa2ff"/></linearGradient></defs>
+        <defs><linearGradient id="g" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" stop-color="#243cff"/><stop offset="1" stop-color="#7aa2ff"/>
+        </linearGradient></defs>
         <rect width="36" height="36" rx="10" fill="url(#g)"/>
         <path d="M18 9 19.8 15.2 26 17 19.8 18.8 18 25 16.2 18.8 10 17 16.2 15.2Z" fill="#0e1320"/>
         <path d="M28 22a10 10 0 1 1-6-12" fill="none" stroke="#0e1320" stroke-width="2" opacity=".35"/>
       </svg>
       NEBULA IT
     </a>
+
     <nav class="menu" aria-label="Главное меню">
       <a href="#hero">Главная</a>
       <span class="dropdown" id="dd">
-        <button class="pill" type="button" aria-expanded="false">Услуги ▾</button>
+        <button class="pill" type="button" aria-expanded="false">Услуги</button>
         <div class="drop" role="menu">
           <a href="#services">Компьютерное зрение (CV)</a>
           <a href="#services">NLP и ассистенты</a>
@@ -201,11 +203,6 @@ body::before {
       <a href="#contact" class="btn light">Обсудить проект</a>
     </nav>
   </div>
-  <!-- Слой с орбом -->
-<div class="mouse-orb" id="mouseOrb">
-  <div class="o o1"></div>
-  <div class="o o2"></div>
-</div>
 </header>
 
 <main>
@@ -436,32 +433,21 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
 <script>
 (function(){
   const st = document.getElementById('mouseOrb').style;
-  let tx = innerWidth * 0.5, ty = innerHeight * 0.22;
-  let x = tx, y = ty;
-  const lerp = (a,b,t)=>a+(b-a)*t;
-
-  addEventListener('pointermove', e=>{
-    tx = e.clientX;
-    ty = e.clientY;
-  }, {passive:true});
-
-(function(){
-  const st = document.getElementById('mouseOrb').style;
   let tx = innerWidth*0.5, ty = innerHeight*0.22, x=tx, y=ty;
   const lerp=(a,b,t)=>a+(b-a)*t;
   addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY},{passive:true});
   function loop(){
-    const dx = tx - x, dy = ty - y;
-    const dist = Math.hypot(dx, dy);                // пиксели
-    const t = Math.min(0.6, 0.12 + dist/800);       // 0.12..0.6
-    x = lerp(x, tx, t);
-    y = lerp(y, ty, t);
-    st.setProperty('--x', x+'px');
-    st.setProperty('--y', y+'px');
+    const dx=tx-x, dy=ty-y, dist=Math.hypot(dx,dy);
+    const t=Math.min(0.6, 0.12 + dist/800);   // быстрее при большом отрыве
+    x=lerp(x,tx,t); y=lerp(y,ty,t);
+    st.setProperty('--x',x+'px'); st.setProperty('--y',y+'px');
     requestAnimationFrame(loop);
   }
   loop();
 })();
+</script>
+  
+<script>
 /* сетка и параллакс */
 (function(){
   const c=document.getElementById('grid');
@@ -473,31 +459,60 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
   addEventListener('resize',draw,{passive:true}); draw();
   addEventListener('scroll',()=>{c.style.transform=`translate3d(0,${scrollY*0.06}px,0)`},{passive:true});
 })();
+
 /* курсорный спот */
 const root=document.documentElement;
 function setVars(x,y){root.style.setProperty('--mx',x+'%');root.style.setProperty('--my',y+'%')}
-addEventListener('pointermove',e=>{setVars((e.clientX/innerWidth)*100,(e.clientY/innerHeight)*100)},{passive:true}); setVars(50,22);
+addEventListener('pointermove',e=>{setVars((e.clientX/innerWidth)*100,(e.clientY/innerHeight)*100)},{passive:true}); 
+setVars(50,22);
+
 /* меню */
 const dd=document.getElementById('dd');
-dd.querySelector('button').addEventListener('click',()=>{dd.classList.toggle('open');dd.querySelector('button').setAttribute('aria-expanded',dd.classList.contains('open'))});
+const ddb=dd.querySelector('button');
+ddb.addEventListener('click',(e)=>{
+  e.stopPropagation(); // ← добавлено, чтобы клик не закрыл меню сразу
+  dd.classList.toggle('open');
+  ddb.setAttribute('aria-expanded', dd.classList.contains('open'));
+});
 addEventListener('click',e=>{if(!dd.contains(e.target)) dd.classList.remove('open')});
+
 /* активный пункт + прогресс */
 const sections=[...document.querySelectorAll('main > section')];
 const links=[...document.querySelectorAll('.menu a[href^="#"]')];
-const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const id='#'+e.target.id;links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===id));}})},{threshold:.6});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+  const id='#'+e.target.id;
+  links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===id));
+}})},{threshold:.6});
 sections.forEach(s=>io.observe(s));
+
 const progress=document.getElementById('progress');
-addEventListener('scroll',()=>{const m=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${Math.max(0,Math.min(1,scrollY/m))})`},{passive:true});
+addEventListener('scroll',()=>{const m=document.documentElement.scrollHeight-innerHeight;
+  progress.style.transform=`scaleX(${Math.max(0,Math.min(1,scrollY/m))})`},{passive:true});
+
 /* авто-снап */
-let snapT=null; function snap(){const vh=innerHeight;let best=null,d=1e9;for(const s of sections){const t=Math.abs(s.getBoundingClientRect().top);if(t<d){d=t;best=s}} if(best&&d>vh*.08) best.scrollIntoView({behavior:'smooth',block:'start'})}
+let snapT=null; 
+function snap(){const vh=innerHeight;let best=null,d=1e9;
+  for(const s of sections){
+    const t=Math.abs(s.getBoundingClientRect().top);
+    if(t<d){d=t;best=s}
+  } 
+  if(best&&d>vh*.08) best.scrollIntoView({behavior:'smooth',block:'start'})
+}
 addEventListener('scroll',()=>{clearTimeout(snapT);snapT=setTimeout(snap,120)},{passive:true});
+
 /* стрелка вниз */
-const hint=document.getElementById('hint'); let idx=0;
-const io2=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){idx=sections.indexOf(e.target);hint.style.display=(idx===sections.length-1)?'none':'flex'}})},{threshold:.7});
+const hint=document.getElementById('hint'); 
+let idx=0;
+const io2=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+  idx=sections.indexOf(e.target);
+  hint.style.display=(idx===sections.length-1)?'none':'flex'
+}})},{threshold:.7});
 sections.forEach(s=>io2.observe(s));
 hint.querySelector('button').addEventListener('click',()=>{sections[Math.min(sections.length-1,idx+1)]?.scrollIntoView({behavior:'smooth'})});
+
 /* год */
 document.getElementById('year').textContent=new Date().getFullYear();
+
 /* модалка (+компенсация скроллбара) */
 const modalReq=document.getElementById('modalReq');
 const btnOpen=document.getElementById('btnReq');
@@ -505,50 +520,51 @@ const btnClose=document.getElementById('btnReqClose');
 function sbw(){return innerWidth - document.documentElement.clientWidth}
 function openReq(){const w=sbw();document.body.style.paddingRight=w?w+'px':'';document.body.style.overflow='hidden';modalReq.classList.add('show')}
 function closeReq(){modalReq.classList.remove('show');document.body.style.overflow='';document.body.style.paddingRight=''}
-btnOpen?.addEventListener('click',openReq); btnClose?.addEventListener('click',closeReq);
-modalReq.addEventListener('click',e=>{if(e.target===modalReq) closeReq()}); addEventListener('keydown',e=>{if(e.key==='Escape') closeReq()});
+btnOpen?.addEventListener('click',openReq); 
+btnClose?.addEventListener('click',closeReq);
+modalReq.addEventListener('click',e=>{if(e.target===modalReq) closeReq()}); 
+addEventListener('keydown',e=>{if(e.key==='Escape') closeReq()});
+
 /* форма */
-const form=document.getElementById('briefForm'); const msg=document.getElementById('formMsg');
-form?.addEventListener('submit',async e=>{e.preventDefault(); const data=Object.fromEntries(new FormData(form).entries());
-  msg.textContent='Отправка…'; await new Promise(r=>setTimeout(r,800)); console.log('BRIEF',data);
-  msg.textContent='Готово. Мы свяжемся в рабочее время.'; form.reset()});
+const form=document.getElementById('briefForm'); 
+const msg=document.getElementById('formMsg');
+form?.addEventListener('submit',async e=>{
+  e.preventDefault(); 
+  const data=Object.fromEntries(new FormData(form).entries());
+  msg.textContent='Отправка…'; 
+  await new Promise(r=>setTimeout(r,800)); 
+  console.log('BRIEF',data);
+  msg.textContent='Готово. Мы свяжемся в рабочее время.'; 
+  form.reset()
+});
+
 /* графики (SVG тянется по width:100%) */
 const a=document.getElementById('a'), b=document.getElementById('b'), c=document.getElementById('c'), poly=document.getElementById('poly');
 function drawLine(){const vals=[+a.value,(a.value*0.6+b.value*0.4),+b.value,(b.value*0.6+c.value*0.4),+c.value,+c.value+10].slice(0,6);
-  const pts=vals.map((v,i)=>`${40+i*104},${200-(v/100)*140}`).join(' '); poly.setAttribute('points',pts)}
-[a,b,c].forEach(el=>el?.addEventListener('input',drawLine)); drawLine();
+  const pts=vals.map((v,i)=>`${40+i*104},${200-(v/100)*140}`).join(' '); 
+  poly.setAttribute('points',pts)}
+[a,b,c].forEach(el=>el?.addEventListener('input',drawLine)); 
+drawLine();
+
 const donut={total:2*Math.PI*80, els:[document.getElementById('d1'),document.getElementById('d2'),document.getElementById('d3')]};
 const dn1=document.getElementById('dn1'), dn2=document.getElementById('dn2'), dn3=document.getElementById('dn3'), dLabel=document.getElementById('donutLabel');
-function drawDonut(){const v1=+dn1.value,v2=+dn2.value,v3=+dn3.value,sum=Math.max(1,v1+v2+v3);
+function drawDonut(){
+  const v1=+dn1.value,v2=+dn2.value,v3=+dn3.value,sum=Math.max(1,v1+v2+v3);
   const a1=donut.total*(v1/sum),a2=donut.total*(v2/sum),a3=donut.total*(v3/sum);
   donut.els[0].setAttribute('stroke-dasharray',`${a1} ${donut.total-a1}`);
-  donut.els[1].setAttribute('stroke-dasharray',`${a2} ${donut.total-a2}`); donut.els[1].setAttribute('stroke-dashoffset',-a1);
-  donut.els[2].setAttribute('stroke-dasharray',`${a3} ${donut.total-a3}`); donut.els[2].setAttribute('stroke-dashoffset',-(a1+a2));
-  dLabel.textContent=`O:${v1}% P:${v2}% R:${v3}%` }
-[dn1,dn2,dn3].forEach(el=>el?.addEventListener('input',drawDonut)); drawDonut();
-document.getElementById('btnResetCharts')?.addEventListener('click',()=>{a.value=30;b.value=60;c.value=80;dn1.value=40;dn2.value=35;dn3.value=25;drawLine();drawDonut()});
-</script>
-<script>
-(function(){
-  const st = document.getElementById('mouseOrb').style;
-  let tx = innerWidth * 0.5, ty = innerHeight * 0.22;
-  let x = tx, y = ty;
-  const lerp = (a,b,t)=>a+(b-a)*t;
-
-  addEventListener('pointermove', e=>{
-    tx = e.clientX;
-    ty = e.clientY;
-  }, {passive:true});
-
-  function loop(){
-    x = lerp(x, tx, 0.12);
-    y = lerp(y, ty, 0.12);
-    st.setProperty('--x', x+'px');
-    st.setProperty('--y', y+'px');
-    requestAnimationFrame(loop);
-  }
-  loop();
-})();
+  donut.els[1].setAttribute('stroke-dasharray',`${a2} ${donut.total-a2}`); 
+  donut.els[1].setAttribute('stroke-dashoffset',-a1);
+  donut.els[2].setAttribute('stroke-dasharray',`${a3} ${donut.total-a3}`); 
+  donut.els[2].setAttribute('stroke-dashoffset',-(a1+a2));
+  dLabel.textContent=`O:${v1}% P:${v2}% R:${v3}%` 
+}
+[dn1,dn2,dn3].forEach(el=>el?.addEventListener('input',drawDonut)); 
+drawDonut();
+document.getElementById('btnResetCharts')?.addEventListener('click',()=>{
+  a.value=30;b.value=60;c.value=80;
+  dn1.value=40;dn2.value=35;dn3.value=25;
+  drawLine();drawDonut()
+});
 </script>
 </body>
 </html>
