@@ -168,6 +168,12 @@ body::before {
 <div class="bg-noise"></div>
 <div class="cursor-spot"></div>
 <div class="grid-overlay"><canvas id="grid"></canvas></div>
+<!-- орб: один раз -->
+<div class="mouse-orb" id="mouseOrb">
+  <div class="o o1"></div>
+  <div class="o o2"></div>
+</div>
+
 <div class="progress" id="progress"></div>
 
 <header>
@@ -432,13 +438,15 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
 
 <script>
 (function(){
-  const st = document.getElementById('mouseOrb').style;
-  let tx = innerWidth*0.5, ty = innerHeight*0.22, x=tx, y=ty;
+  const el = document.getElementById('mouseOrb');
+  if(!el) return;                      // нет орба — выходим тихо
+  const st = el.style;
+  let tx=innerWidth*0.5, ty=innerHeight*0.22, x=tx, y=ty;
   const lerp=(a,b,t)=>a+(b-a)*t;
   addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY},{passive:true});
   function loop(){
     const dx=tx-x, dy=ty-y, dist=Math.hypot(dx,dy);
-    const t=Math.min(0.6, 0.12 + dist/800);   // быстрее при большом отрыве
+    const t=Math.min(0.6, 0.12 + dist/800);
     x=lerp(x,tx,t); y=lerp(y,ty,t);
     st.setProperty('--x',x+'px'); st.setProperty('--y',y+'px');
     requestAnimationFrame(loop);
