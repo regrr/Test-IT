@@ -4,34 +4,30 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>NEBULA IT — Консалтинг и разработка</title>
-  <meta name="description" content="Цифровые продукты для бизнеса: аналитика, веб‑приложения, интеграции, AI."/>
+  <meta name="description" content="Цифровые продукты для бизнеса: аналитика, веб‑приложения, интеграции, AI. Деловой стиль, расширенные разделы, интерактивные графики и презентационный скролл."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root{
-      /* Светлая деловая тема */
-      --bg:#f6f7fb; --paper:#ffffff; --ink:#0f172a; --mut:#5b6472; --line:#e6e9f0;
-      --acc:#2563eb; --acc2:#0ea5e9; --ok:#16a34a; --warn:#d97706; --err:#dc2626;
-      --br:14px;
+      --bg:#f5f7fb; --paper:#ffffff; --ink:#0f172a; --mut:#5b6472; --line:#e6e9f0;
+      --acc:#2563eb; --acc2:#0ea5e9; --ok:#16a34a; --warn:#d97706; --err:#dc2626; --br:14px;
+      --spot-x:50%; --spot-y:0%;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
     a{color:var(--acc);text-decoration:none}
-    .container{max-width:1240px;margin:0 auto;padding:0 20px}
+    .container{max-width:1280px;margin:0 auto;padding:0 24px}
 
-    /* Splash intro */
-    .splash{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(800px 400px at 50% 30%,rgba(37,99,235,.05),transparent 60%),#f8faff;z-index:999}
-    .splash .logoBig{width:120px;height:120px;border-radius:28px;display:grid;place-items:center;color:#0f172a;background:conic-gradient(from 0deg,#bcd2ff,#b7f1ff,#bcd2ff);box-shadow:0 0 80px rgba(37,99,235,.15) inset, 0 0 32px rgba(14,165,233,.12)}
-    .splash .logoBig span{font-weight:800;font-size:42px}
-    .splash .ring{position:absolute;width:220px;height:220px;border-radius:999px;border:2px solid #e8eef9;animation:ring 1.8s ease infinite}
-    @keyframes ring{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.15);opacity:0}}
-    .splash.hide{animation:fadeOut .8s ease forwards}
-    @keyframes fadeOut{to{opacity:0;visibility:hidden}}
+    /* Progress bar */
+    .progress{position:fixed;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));transform-origin:left;transform:scaleX(0);z-index:1000}
+
+    /* Spotlight following cursor */
+    .spot{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(600px 320px at var(--spot-x) var(--spot-y), rgba(37,99,235,.08), transparent 65%)}
 
     /* Header */
-    header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.8);backdrop-filter:saturate(130%) blur(8px);border-bottom:1px solid var(--line)}
+    header{position:sticky;top:0;z-index:900;background:rgba(255,255,255,.88);backdrop-filter:saturate(130%) blur(8px);border-bottom:1px solid var(--line)}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
     .brand{display:flex;align-items:center;gap:10px;font-weight:700}
     .logo{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:conic-gradient(from 180deg,#93c5fd,#67e8f9);color:#0f172a;opacity:0;transform:scale(.9);animation:logoIn .8s ease .2s forwards}
@@ -42,31 +38,37 @@
     .btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));border:none;color:#fff}
     .btn.ghost{background:transparent}
 
-    /* Section base */
+    /* Slides wrapper */
+    main{scroll-snap-type:y mandatory}
+    .slide{min-height:100svh;scroll-snap-align:start;display:flex;align-items:center;position:relative}
     .section{padding:72px 0}
-    .paper{background:var(--paper);border:1px solid var(--line);border-radius:var(--br);padding:20px}
-    h1{font-size:52px;line-height:1.05;margin:14px 0 6px}
-    h2{font-size:32px;margin:0 0 8px}
+    .paper{background:var(--paper);border:1px solid var(--line);border-radius:var(--br);padding:24px;position:relative;z-index:1}
+    h1{font-size:56px;line-height:1.05;margin:14px 0 6px}
+    h2{font-size:34px;margin:0 0 10px}
+    h3{margin:8px 0}
     .mut{color:var(--mut)}
 
     /* Hero grid */
-    .hero{padding:84px 0 32px}
     .grid-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
     .kicker{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--mut)}
     .codecard{border:1px solid var(--line);background:linear-gradient(180deg,#ffffff,#f9fbff);border-radius:12px;padding:16px;font-family:"JetBrains Mono",monospace;font-size:13.5px;position:relative}
     .cursor{display:inline-block;width:10px;background:#3b82f6;animation:blink 1.2s infinite}
     @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
 
+    /* Grid utilities */
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+
     /* Cards */
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
     .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;transition:transform .25s, box-shadow .25s}
     .card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(10,18,40,.06)}
 
     /* Cases */
     .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .shot{border-radius:12px;overflow:hidden;border:1px solid var(--line);position:relative;background:#fff}
-    .shot img{width:100%;height:220px;object-fit:cover;display:block;filter:saturate(.95)}
-    .tag{position:absolute;left:10px;top:10px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.9);font-size:12px;border:1px solid var(--line)}
+    .shot img{width:100%;height:240px;object-fit:cover;display:block;filter:saturate(.95)}
+    .tag{position:absolute;left:10px;top:10px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.95);font-size:12px;border:1px solid var(--line)}
 
     /* FAQ */
     .faq{display:grid;gap:10px}
@@ -85,10 +87,11 @@
     .charts{display:grid;grid-template-columns:2fr 1fr;gap:16px}
     .chart{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
 
-    /* Stats */
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
-    .stat strong{display:block;font-size:30px}
+    /* Timeline */
+    .timeline{position:relative}
+    .timeline:before{content:"";position:absolute;left:12px;top:0;bottom:0;width:2px;background:#e6e9f0}
+    .tl-item{position:relative;padding-left:40px;margin:12px 0}
+    .tl-item:before{content:"";position:absolute;left:6px;top:6px;width:14px;height:14px;border-radius:999px;background:linear-gradient(135deg,var(--acc),var(--acc2))}
 
     /* CTA */
     .cta{background:linear-gradient(135deg,#eef4ff,#e6fbff);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
@@ -100,23 +103,24 @@
     .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
     .reveal.show{opacity:1;transform:none}
 
+    /* Back to top */
+    .toTop{position:fixed;right:18px;bottom:18px;z-index:900;opacity:0;transform:translateY(10px);transition:.3s}
+    .toTop.show{opacity:1;transform:none}
+
     @media (max-width:1100px){
       .grid-hero{grid-template-columns:1fr}
-      .cards,.cases,.partners,.docs,.charts,.stats{grid-template-columns:1fr 1fr}
+      .grid-2,.grid-3,.grid-4,.cases,.partners,.docs,.charts{grid-template-columns:1fr 1fr}
       .cta{grid-template-columns:1fr}
     }
     @media (max-width:640px){
-      h1{font-size:38px}
-      .cards,.cases,.partners,.docs,.charts,.stats{grid-template-columns:1fr}
+      h1{font-size:40px}
+      .grid-2,.grid-3,.grid-4,.cases,.partners,.docs,.charts{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
-  <!-- Splash intro -->
-  <div class="splash" id="splash" aria-hidden="true">
-    <div class="logoBig"><span>✦</span></div>
-    <div class="ring"></div>
-  </div>
+  <div class="progress" id="progress"></div>
+  <div class="spot" id="spot"></div>
 
   <header>
     <div class="container nav">
@@ -125,7 +129,7 @@
         <a href="#hero">Главная</a>
         <a href="#services">Услуги</a>
         <a href="#cases">Проекты</a>
-        <a href="#charts">Аналитика</a>
+        <a href="#analytics">Аналитика</a>
         <a href="#docs">Документация</a>
         <a href="#faq">FAQ</a>
         <button class="btn ghost" id="btnRequisites">Реквизиты</button>
@@ -135,80 +139,90 @@
   </header>
 
   <main>
-    <!-- HERO -->
-    <section id="hero" class="hero">
-      <div class="container grid-hero">
-        <div>
-          <span class="kicker">Консалтинг · Веб · Интеграции · AI</span>
-          <h1 class="reveal">Делаем цифровые продукты, которые решают задачи бизнеса</h1>
-          <p class="mut reveal" style="transition-delay:.07s">От аудита и прототипа до продакшена и SLA. Ставим KPI, считаем экономический эффект, показываем прогресс каждую неделю.</p>
-          <div style="display:flex;gap:10px;margin-top:12px" class="reveal" style="transition-delay:.12s">
-            <button class="btn primary" id="btnBrief">Заполнить бриф</button>
-            <a class="btn" href="#services">Смотреть услуги</a>
-          </div>
-        </div>
-        <div class="codecard reveal" style="transition-delay:.1s">
+    <!-- SLIDE 1: HERO -->
+    <section id="hero" class="slide section">
+      <div class="container">
+        <div class="paper reveal">
+          <div class="grid-hero">
+            <div>
+              <span class="kicker">Консалтинг · Веб · Интеграции · AI</span>
+              <h1>Цифровые продукты, которые дают измеримый эффект</h1>
+              <p class="mut">Мы проектируем, считаем экономический эффект, показываем прогресс по метрикам и прозрачный бэклог. Концентрация на ROI, скорости вывода и устойчивой архитектуре.</p>
+              <div style="display:flex;gap:10px;margin-top:12px">
+                <button class="btn primary" id="btnBrief">Заполнить бриф</button>
+                <a class="btn" href="#services">Смотреть услуги</a>
+              </div>
+            </div>
+            <div class="codecard">
 <pre><code>// product.yaml
 name: nebula-analytics
 stack: nextjs + fastapi + pg + redis
-ci: lint → test → build → deploy(vercel)
-slo: uptime &gt;= 99.5%, p95 &lt; 300ms
-ai:  assistants(rag,tool-use)
+ci:    lint → test → build → deploy(vercel)
+slo:   uptime &gt;= 99.5%, p95 &lt; 300ms
+ai:    assistants(rag,tool-use)
 <span class="cursor"> </span></code></pre>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- SERVICES -->
-    <section id="services" class="section">
+    <!-- SLIDE 2: SERVICES -->
+    <section id="services" class="slide section">
       <div class="container">
         <div class="paper reveal">
           <h2>Услуги</h2>
-          <p class="mut">Комплект закрывает весь цикл: стратегия → дизайн → разработка → данные → поддержка.</p>
-          <div class="cards" style="margin-top:12px">
-            <article class="card"><h3>Аналитика и аудит</h3><p class="mut">Интервью, требования, KPI, риски, дорожная карта.</p></article>
-            <article class="card"><h3>Продуктовая разработка</h3><p class="mut">UX/UI, фронтенд, API, CI/CD, observability.</p></article>
-            <article class="card"><h3>AI‑внедрение</h3><p class="mut">RAG, ассистенты, приватность, политика данных.</p></article>
-            <article class="card"><h3>Интеграции</h3><p class="mut">CRM/ERP, шины данных, ETL, очереди, вебхуки.</p></article>
-            <article class="card"><h3>Данные и отчётность</h3><p class="mut">Хранилище, витрины, дашборды, метрики бизнеса.</p></article>
-            <article class="card"><h3>SLA‑поддержка</h3><p class="mut">8×5/24×7, RTO/RPO, мониторинг, инциденты.</p></article>
+          <p class="mut">Закрываем цикл: аудит → прототип → разработка → данные → поддержка. Каждый блок расширен описаниями, KPI и артефактами.</p>
+          <div class="grid-3" style="margin-top:12px">
+            <article class="card"><h3>Аналитика и аудит</h3><p class="mut">Интервью, CJM, определение гипотез ценности, рисков и KPI. Результат: хартия проекта, дорожная карта.</p></article>
+            <article class="card"><h3>Продуктовая разработка</h3><p class="mut">UX/UI, фронтенд, API, CI/CD, observability. Результат: MVP с метриками активации и удержания.</p></article>
+            <article class="card"><h3>AI‑внедрение</h3><p class="mut">RAG, ассистенты, политика данных, приватность. Результат: ускорение операций и автоматизация.</p></article>
+            <article class="card"><h3>Интеграции</h3><p class="mut">CRM/ERP, шины данных, ETL, очереди, вебхуки. Результат: консистентные данные и сквозная отчётность.</p></article>
+            <article class="card"><h3>Данные и отчётность</h3><p class="mut">Хранилище, витрины, дашборды, метрики бизнеса. Результат: управленческие решения на данных.</p></article>
+            <article class="card"><h3>SLA‑поддержка</h3><p class="mut">8×5/24×7, SLO/SLA, инциденты, постмортем. Результат: предсказуемость и стабильность.</p></article>
+          </div>
+          <div class="timeline" style="margin-top:16px">
+            <div class="tl-item"><strong>Недели 1–2</strong><div class="mut">Диагностика, приоритизация, KPI, прототип‑скетчи.</div></div>
+            <div class="tl-item"><strong>Недели 3–6</strong><div class="mut">MVP‑спринты, UX‑тесты, интеграции, observability.</div></div>
+            <div class="tl-item"><strong>Недели 7–8</strong><div class="mut">Пилот, метрики эффекта, план развития на квартал.</div></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CASES / PROJECTS -->
-    <section id="cases" class="section">
+    <!-- SLIDE 3: PROJECTS -->
+    <section id="cases" class="slide section">
       <div class="container">
         <div class="paper reveal">
           <h2>Проекты</h2>
+          <p class="mut">Выдержаны в деловой стилистике. Картинки обновлены под светлую тему.</p>
           <div class="cases" style="margin-top:10px">
-            <div class="shot"><span class="tag">FinTech</span><img src="https://images.unsplash.com/photo-1559090336-9f6ab1ad61f9?q=80&w=1400&auto=format&fit=crop" alt="Кейс 1"></div>
-            <div class="shot"><span class="tag">E‑comm</span><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1400&auto=format&fit=crop" alt="Кейс 2"></div>
-            <div class="shot"><span class="tag">AI Ops</span><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1400&auto=format&fit=crop" alt="Кейс 3"></div>
+            <div class="shot"><span class="tag">FinTech</span><img src="https://images.unsplash.com/photo-1559090336-9f6ab1ad61f9?q=80&w=1600&auto=format&fit=crop" alt="Кейс 1"></div>
+            <div class="shot"><span class="tag">E‑commerce</span><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop" alt="Кейс 2"></div>
+            <div class="shot"><span class="tag">AI Ops</span><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop" alt="Кейс 3"></div>
           </div>
-          <div class="stats" style="margin-top:14px">
-            <div class="stat"><strong data-counter="42">0</strong><span class="mut">запусков</span></div>
-            <div class="stat"><strong data-counter="18">0</strong><span class="mut">AI‑кейсов</span></div>
-            <div class="stat"><strong data-counter="9">0</strong><span class="mut">лет опыта</span></div>
-            <div class="stat"><strong data-counter="99">0</strong><span class="mut">% SLA</span></div>
+          <div class="grid-4" style="margin-top:14px">
+            <div class="card"><h3>Результаты</h3><p class="mut">Сокращение ручных операций до −38%, p95 API 240мс, рост конверсии +12%.</p></div>
+            <div class="card"><h3>Метрики</h3><p class="mut">DAU/MAU, активация, удержание, CAC/LTV, NPS, время цикла задач.</p></div>
+            <div class="card"><h3>Риски</h3><p class="mut">Нагрузочные пики, интеграции, качество данных, зависимость от API.</p></div>
+            <div class="card"><h3>Архитектура</h3><p class="mut">Next.js + FastAPI + Postgres + Redis + очереди. Мониторинг, алерты.</p></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ANALYTICS / CHARTS -->
-    <section id="charts" class="section">
+    <!-- SLIDE 4: ANALYTICS -->
+    <section id="analytics" class="slide section">
       <div class="container">
         <div class="paper reveal">
           <h2>Аналитика</h2>
-          <p class="mut">Живые диаграммы без библиотек. Сдвигайте ползунки — графики обновятся.</p>
+          <p class="mut">Живые диаграммы. Меняйте параметры — графики перестраиваются.</p>
           <div class="charts" style="margin-top:10px">
             <!-- Line chart -->
             <div class="chart">
               <svg id="lineChart" viewBox="0 0 600 260" width="100%" height="260" role="img" aria-label="Линейный график">
                 <rect x="0" y="0" width="600" height="260" fill="#ffffff" rx="10" ry="10" stroke="var(--line)"/>
-                <g id="grid" stroke="#eef2f7">
+                <g stroke="#eef2f7">
                   <line x1="40" x2="560" y1="40" y2="40"/>
                   <line x1="40" x2="560" y1="90" y2="90"/>
                   <line x1="40" x2="560" y1="140" y2="140"/>
@@ -228,7 +242,7 @@ ai:  assistants(rag,tool-use)
                 <label>Рост C: <input id="c" type="range" min="0" max="100" value="80"></label>
               </div>
             </div>
-            <!-- Bar chart -->
+            <!-- Bar chart + KPI -->
             <div class="chart">
               <svg id="barChart" viewBox="0 0 300 260" width="100%" height="260" role="img" aria-label="Столбчатая диаграмма">
                 <rect x="0" y="0" width="300" height="260" fill="#ffffff" rx="10" ry="10" stroke="var(--line)"/>
@@ -236,56 +250,89 @@ ai:  assistants(rag,tool-use)
               </svg>
               <div style="display:grid;gap:8px;margin-top:8px">
                 <label>Продажи Q1–Q4: <input id="barsInput" type="range" min="0" max="100" value="50"></label>
+                <div class="mut">KPI: целевой рост ≥ <strong>+15%</strong>, отклонение ≤ <strong>5%</strong>.</div>
               </div>
+            </div>
+          </div>
+          <!-- Donut + table -->
+          <div class="grid-2" style="margin-top:16px">
+            <div class="chart">
+              <svg id="donut" viewBox="0 0 220 220" width="100%" height="220" aria-label="Доли каналов">
+                <circle cx="110" cy="110" r="80" fill="#fff" stroke="#eef2f7" stroke-width="18"/>
+                <circle id="d1" cx="110" cy="110" r="80" fill="none" stroke="#2563eb" stroke-width="18" stroke-dasharray="0 502" transform="rotate(-90 110 110)"/>
+                <circle id="d2" cx="110" cy="110" r="80" fill="none" stroke="#0ea5e9" stroke-width="18" stroke-dasharray="0 502" transform="rotate(-90 110 110)"/>
+                <circle id="d3" cx="110" cy="110" r="80" fill="none" stroke="#93c5fd" stroke-width="18" stroke-dasharray="0 502" transform="rotate(-90 110 110)"/>
+                <text id="donutLabel" x="110" y="118" text-anchor="middle" font-size="16">Каналы</text>
+              </svg>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                <label>Organic <input id="dn1" type="range" min="0" max="100" value="40"></label>
+                <label>Paid <input id="dn2" type="range" min="0" max="100" value="35"></label>
+                <label>Referrals <input id="dn3" type="range" min="0" max="100" value="25"></label>
+              </div>
+            </div>
+            <div class="paper" style="border:1px dashed var(--line)">
+              <h3>Интерпретация</h3>
+              <p class="mut">Смещение в Organic снижает CAC, но повышает лаг в результатах. Paid ускоряет тесты гипотез. Referrals «размазывают» сезонность и добавляют качество лидов.</p>
+              <ul class="mut">
+                <li>Контрольная панель: еженедельно.</li>
+                <li>Доверительные интервалы: 95%.</li>
+                <li>Политика отсечения аномалий: IQR × 1.5.</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PARTNERS -->
-    <section class="section">
+    <!-- SLIDE 5: PARTNERS -->
+    <section class="slide section">
       <div class="container">
         <div class="paper reveal">
           <h2>Партнёры</h2>
+          <p class="mut">Реестры и платформы, с которыми мы типично интегрируемся.</p>
           <div class="partners" style="margin-top:10px">
-            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
-            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
-            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
-            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
-            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
-            <div class="partner"><svg width="80" height="22"><rect width="80" height="22" rx="4" fill="#e8eef9"/></svg></div>
+            <div class="partner">NorthWind Capital</div>
+            <div class="partner">Volta Cloud</div>
+            <div class="partner">Sigma Data</div>
+            <div class="partner">Kappa CRM</div>
+            <div class="partner">OmniPay</div>
+            <div class="partner">StreamQueue</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- DOCS -->
-    <section id="docs" class="section">
+    <!-- SLIDE 6: DOCS -->
+    <section id="docs" class="slide section">
       <div class="container">
         <div class="paper reveal">
           <h2>Документация</h2>
           <div class="docs" style="margin-top:10px">
-            <div class="doc"><h3>API</h3><p class="mut">REST + Webhook. Авторизация OAuth2. Лимиты: 600 rpm.</p><button class="btn" id="btnApi">Показать пример</button></div>
+            <div class="doc"><h3>API</h3><p class="mut">REST + Webhook. OAuth2. Скоростные лимиты и идемпотентность.</p><button class="btn" id="btnApi">Показать пример</button></div>
             <div class="doc"><h3>Инфраструктура</h3><p class="mut">Vercel фронт, FastAPI бэкенд, PostgreSQL, Redis. Мониторинг и логи.</p><button class="btn" id="btnInfra">Диаграмма</button></div>
+          </div>
+          <div class="cta" style="margin-top:16px">
+            <div><strong>Whitepaper</strong><div class="mut">1 страница: принципы архитектуры и экономический эффект.</div></div>
+            <button class="btn primary" id="btnWhite">Скачать</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section id="faq" class="section">
+    <!-- SLIDE 7: FAQ -->
+    <section id="faq" class="slide section">
       <div class="container">
         <div class="paper reveal">
           <h2>FAQ</h2>
           <div class="faq" style="margin-top:10px">
-            <details><summary>Сколько длится запуск MVP?</summary><p class="mut">Обычно 4–8 недель при готовом контенте и согласовании.</p></details>
-            <details><summary>Как считаете ROI?</summary><p class="mut">Определяем целевые метрики, строим воронки, считаем инкремент.</p></details>
-            <details><summary>Работаете по ТЗ заказчика?</summary><p class="mut">Да. Также можем оформить требования и прототип сами.</p></details>
+            <details><summary>Сколько длится запуск MVP?</summary><p class="mut">4–8 недель при готовом контенте и оперативном согласовании. Демо еженедельно.</p></details>
+            <details><summary>Как считаете ROI?</summary><p class="mut">Определяем целевые метрики, фиксируем базу, считаем инкремент и вклад каждого изменения.</p></details>
+            <details><summary>У вас есть SLA?</summary><p class="mut">Да. 8×5 или 24×7, времени реакции от 30 минут, план DR.</p></details>
+            <details><summary>Как устроена передача прав?</summary><p class="mut">Исключительные права по договору, исходники и CI/CD — на стороне клиента.</p></details>
           </div>
           <div class="cta" style="margin-top:14px">
-            <div><strong>Нужна консультация?</strong><div class="mut">Оставьте контакты, пришлём чек‑лист на 1 страницу.</div></div>
-            <button class="btn primary" id="btnOpenBrief2">Оставить заявку</button>
+            <div><strong>Остались вопросы?</strong><div class="mut">Зафиксируем формат и сроки в одном письме.</div></div>
+            <button class="btn primary" id="btnContact2">Связаться</button>
           </div>
         </div>
       </div>
@@ -304,14 +351,16 @@ ai:  assistants(rag,tool-use)
     </div>
   </footer>
 
+  <button class="btn toTop" id="toTop" aria-label="Вверх">↑</button>
+
   <!-- MODALS -->
-  <div class="modal" id="modalBrief" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:200">
+  <div class="modal" id="modalBrief" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:1200">
     <div class="paper" style="width:min(760px,92vw)">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
         <h3 style="margin:0">Заявка на консультацию</h3>
         <button class="btn" id="btnCloseBrief">Закрыть</button>
       </div>
-      <p class="mut" style="margin:8px 0 12px">Мы ответим в рабочее время.</p>
+      <p class="mut" style="margin:8px 0 12px">Ответим в рабочее время.</p>
       <form id="briefForm" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
         <input name="name" placeholder="Имя" required aria-label="Имя"/>
         <input name="email" type="email" placeholder="Email" required aria-label="Email"/>
@@ -326,7 +375,7 @@ ai:  assistants(rag,tool-use)
     </div>
   </div>
 
-  <div class="modal" id="modalReq" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:200">
+  <div class="modal" id="modalReq" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:1200">
     <div class="paper" style="width:min(640px,92vw)">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
         <h3 style="margin:0">Реквизиты (пример)</h3>
@@ -342,7 +391,7 @@ ai:  assistants(rag,tool-use)
     </div>
   </div>
 
-  <div class="modal" id="modalApi" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:200">
+  <div class="modal" id="modalApi" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:1200">
     <div class="paper" style="width:min(760px,92vw)">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3 style="margin:0">API пример</h3><button class="btn" id="btnCloseApi">Закрыть</button></div>
       <pre class="paper" style="overflow:auto;max-height:320px"><code>POST /v1/lead
@@ -356,7 +405,7 @@ ai:  assistants(rag,tool-use)
     </div>
   </div>
 
-  <div class="modal" id="modalInfra" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:200">
+  <div class="modal" id="modalInfra" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.35);z-index:1200">
     <div class="paper" style="width:min(760px,92vw)">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3 style="margin:0">Диаграмма инфраструктуры</h3><button class="btn" id="btnCloseInfra">Закрыть</button></div>
       <svg viewBox="0 0 720 300" width="100%" height="300" aria-label="Диаграмма">
@@ -379,9 +428,19 @@ ai:  assistants(rag,tool-use)
   </div>
 
   <script>
-    // Splash
-    const splash = document.getElementById('splash');
-    setTimeout(()=>{ splash.classList.add('hide'); setTimeout(()=>splash.remove(), 900); }, 1200);
+    // Progress bar
+    const prog = document.getElementById('progress');
+    const updateProgress = ()=>{
+      const h = document.documentElement; const sc = h.scrollTop; const th = h.scrollHeight - h.clientHeight; prog.style.transform = `scaleX(${sc/th})`;
+    };
+    document.addEventListener('scroll', updateProgress, {passive:true}); updateProgress();
+
+    // Spotlight follow cursor
+    const spot = document.getElementById('spot');
+    window.addEventListener('mousemove', (e)=>{
+      const x = (e.clientX / window.innerWidth)*100; const y = (e.clientY / window.innerHeight)*100;
+      spot.style.setProperty('--spot-x', x + '%'); spot.style.setProperty('--spot-y', y + '%');
+    }, {passive:true});
 
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -390,16 +449,10 @@ ai:  assistants(rag,tool-use)
     const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } }) }, {threshold:.15});
     document.querySelectorAll('.reveal, .paper, .card, .shot, .stat, .doc, .partner').forEach(n=>io.observe(n));
 
-    // Counters
-    const counters = document.querySelectorAll('[data-counter]');
-    const io2 = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(!e.isIntersecting) return; const el=e.target; const to=+el.dataset.counter; let v=0; const dur=1200; const t0=performance.now();
-        function tick(t){ const p=Math.min(1,(t-t0)/dur); v=Math.floor(p*to); el.textContent=v; if(p<1) requestAnimationFrame(tick); }
-        requestAnimationFrame(tick); io2.unobserve(el);
-      })
-    },{threshold:.4});
-    counters.forEach(el=>io2.observe(el));
+    // Back to top
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll',()=>{ window.scrollY>600 ? toTop.classList.add('show') : toTop.classList.remove('show'); });
+    toTop.addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
 
     // Modals open/close
     const modal = (id)=>document.getElementById(id);
@@ -407,8 +460,8 @@ ai:  assistants(rag,tool-use)
     const close= (m)=>{ m.style.display='none'; };
 
     document.getElementById('btnBrief')?.addEventListener('click', ()=>open(modal('modalBrief')));
-    document.getElementById('btnOpenBrief2')?.addEventListener('click', ()=>open(modal('modalBrief')));
     document.getElementById('btnContact')?.addEventListener('click', ()=>open(modal('modalBrief')));
+    document.getElementById('btnContact2')?.addEventListener('click', ()=>open(modal('modalBrief')));
     document.getElementById('btnRequisites')?.addEventListener('click', ()=>open(modal('modalReq')));
     document.getElementById('btnApi')?.addEventListener('click', ()=>open(modal('modalApi')));
     document.getElementById('btnInfra')?.addEventListener('click', ()=>open(modal('modalInfra')));
@@ -446,8 +499,7 @@ ai:  assistants(rag,tool-use)
       const xy = pts.map((v,i)=> i%2===0 ? 40+v*6.5 : 200 - v*1.5 );
       line.setAttribute('points', `${xy[0]},${xy[1]} ${xy[2]},${xy[3]} ${xy[4]},${xy[5]} ${xy[6]},${xy[7]}`);
     }
-    [a,b,c].forEach(i=> i?.addEventListener('input', drawLine));
-    drawLine();
+    [a,b,c].forEach(i=> i?.addEventListener('input', drawLine)); drawLine();
 
     const barsG = document.getElementById('bars');
     const barsInput = document.getElementById('barsInput');
@@ -455,11 +507,31 @@ ai:  assistants(rag,tool-use)
       const base = +barsInput.value; barsG.innerHTML=''; const xs=[40,100,160,220];
       xs.forEach((x,idx)=>{ const h = base + idx*10; const y = 220 - h*1.4; const color = idx%2? '#0ea5e9':'#2563eb';
         const r = document.createElementNS('http://www.w3.org/2000/svg','rect');
-        r.setAttribute('x', x); r.setAttribute('y', y); r.setAttribute('width', 32); r.setAttribute('height', 220-y); r.setAttribute('rx', 6); r.setAttribute('fill', color);
-        r.setAttribute('opacity','0.9'); barsG.appendChild(r);
+        r.setAttribute('x', x); r.setAttribute('y', y); r.setAttribute('width', 32); r.setAttribute('height', 220-y); r.setAttribute('rx', 6); r.setAttribute('fill', color); r.setAttribute('opacity','0.9');
+        barsG.appendChild(r);
       });
     }
     barsInput?.addEventListener('input', drawBars); drawBars();
+
+    // Donut
+    const d1 = document.getElementById('d1');
+    const d2 = document.getElementById('d2');
+    const d3 = document.getElementById('d3');
+    const dn1 = document.getElementById('dn1');
+    const dn2 = document.getElementById('dn2');
+    const dn3 = document.getElementById('dn3');
+    const donutLabel = document.getElementById('donutLabel');
+    function drawDonut(){
+      const v1=+dn1.value, v2=+dn2.value, v3=+dn3.value; const sum=Math.max(1, v1+v2+v3); const circ = 2*Math.PI*80; // r=80
+      const a1 = circ*(v1/sum), a2=circ*(v2/sum), a3=circ*(v3/sum);
+      d1.setAttribute('stroke-dasharray', `${a1} ${circ-a1}`);
+      d2.setAttribute('stroke-dasharray', `${a2} ${circ-a2}`);
+      d2.style.strokeDashoffset = -a1;
+      d3.setAttribute('stroke-dasharray', `${a3} ${circ-a3}`);
+      d3.style.strokeDashoffset = -(a1+a2);
+      donutLabel.textContent = `Total ${sum}`;
+    }
+    [dn1,dn2,dn3].forEach(i=> i?.addEventListener('input', drawDonut)); drawDonut();
   </script>
 </body>
 </html>
