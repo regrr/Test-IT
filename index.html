@@ -1,3 +1,5 @@
+Готово. Итоговый файл с правками фона и дропдауна «Услуги».
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -20,7 +22,12 @@ html,body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Sego
 
 /* ---------- Секции/контейнер ---------- */
 main{scroll-snap-type:y mandatory}
-section{min-height:100svh;scroll-snap-align:start;display:flex;align-items:center;padding-block:var(--pv)}
+section{
+  min-height:100vh;        /* fallbacks */
+  min-height:100svh;
+  min-height:100dvh;
+  scroll-snap-align:start;display:flex;align-items:center;padding-block:var(--pv)
+}
 .container{max-width:var(--cw);margin:0 auto;padding-inline:var(--gx)}
 
 /* ---------- Фон: орб + шум + сетка ---------- */
@@ -34,7 +41,10 @@ section{min-height:100svh;scroll-snap-align:start;display:flex;align-items:cente
   animation:drift 30s linear infinite}
 @keyframes drift{to{transform:translate3d(25%,25%,0)}}
 
-.grid-overlay{position:fixed;inset:0;z-index:-1;opacity:.35;mask-image:linear-gradient(#000,transparent 70%)}
+.grid-overlay{position:fixed;inset:0;z-index:-1;opacity:.35;
+  mask-image:linear-gradient(#000,transparent 70%);
+  -webkit-mask-image:linear-gradient(#000,transparent 70%);
+}
 .grid-overlay canvas{width:100%;height:100%}
 
 /* Синий орб за мышкой */
@@ -47,12 +57,8 @@ section{min-height:100svh;scroll-snap-align:start;display:flex;align-items:cente
   width:640px;height:640px;opacity:.18;filter:blur(60px)}
 @keyframes orbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
 
-/* Лёгкая сетка-узор, остаётся за контентом */
-body::before{content:"";position:fixed;inset:0;z-index:-2;
-  background-image:
-    linear-gradient(to right, rgba(0,0,0,.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0,0,0,.04) 1px, transparent 1px);
-  background-size:40px 40px}
+/* Удаляем дубль-сетку из before */
+body::before{display:none}
 
 /* Чтобы контент перекрывал орб */
 .paper,.card,footer{position:relative;z-index:1;background:#fff}
@@ -90,8 +96,10 @@ body::before{content:"";position:fixed;inset:0;z-index:-2;
 /* Дропдаун */
 .dropdown{position:relative}
 .drop{
-  position:absolute;top:110%;left:0;display:none;min-width:min(320px,92vw);
-  background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px
+  position:fixed;          /* фикс поверх overflow */
+  display:none;min-width:min(320px,92vw);
+  background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;
+  z-index:1500;max-height:min(60vh,420px);overflow:auto
 }
 .drop a{display:block;padding:10px 12px;border-radius:10px}
 .drop a:hover{background:#f6f8ff}
@@ -102,6 +110,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-2;
 .btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 18px;border-radius:9999px;font-weight:700;border:0}
 .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink);box-shadow:0 8px 24px rgba(15,23,42,.06)}
 .btn.solid{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 14px 40px rgba(36,60,255,.28)}
+.btn.light{background:#fff;border:1px solid var(--line);color:var(--ink);box-shadow:0 8px 24px rgba(15,23,42,.06)}
 
 /* ---------- Карточки/сетки/типографика ---------- */
 .paper{border:1px solid var(--line);border-radius:var(--r);padding:clamp(16px,2.2vw,22px)}
@@ -164,13 +173,10 @@ footer{padding-block:clamp(20px,3.2vw,28px);border-top:1px solid var(--line);bac
   .btn{width:100%}
 }
 </style>
-
-
 </head>
 <body>
 <div class="hero-bg"></div>
 <div class="bg-noise"></div>
-<div class="cursor-spot"></div>
 <div class="grid-overlay"><canvas id="grid"></canvas></div>
 <!-- орб: один раз -->
 <div class="mouse-orb" id="mouseOrb">
@@ -199,7 +205,7 @@ footer{padding-block:clamp(20px,3.2vw,28px);border-top:1px solid var(--line);bac
       <a href="#hero"      class="pill-link">Главная</a>
 
       <div class="pill-link dropdown" id="dd">
-        <button class="pill-btn" type="button" aria-expanded="false">Услуги</button>
+        <button class="pill-btn" type="button" aria-expanded="false" aria-haspopup="true">Услуги</button>
         <div class="drop" role="menu">
           <a href="#services">Компьютерное зрение</a>
           <a href="#services">NLP и ассистенты</a>
@@ -449,9 +455,10 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
 </div>
 
 <script>
+/* орб за курсором */
 (function(){
   const el = document.getElementById('mouseOrb');
-  if(!el) return;                      // нет орба — выходим тихо
+  if(!el) return;
   const st = el.style;
   let tx=innerWidth*0.5, ty=innerHeight*0.22, x=tx, y=ty;
   const lerp=(a,b,t)=>a+(b-a)*t;
@@ -466,7 +473,7 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
   loop();
 })();
 </script>
-  
+
 <script>
 /* сетка и параллакс */
 (function(){
@@ -480,45 +487,68 @@ slo: { uptime: '≥99.5%', p95: '&lt;300ms' }
   addEventListener('scroll',()=>{c.style.transform=`translate3d(0,${scrollY*0.06}px,0)`},{passive:true});
 })();
 
-/* курсорный спот */
+/* курсорный спот для градиента героя */
 const root=document.documentElement;
 function setVars(x,y){root.style.setProperty('--mx',x+'%');root.style.setProperty('--my',y+'%')}
 addEventListener('pointermove',e=>{setVars((e.clientX/innerWidth)*100,(e.clientY/innerHeight)*100)},{passive:true}); 
 setVars(50,22);
 
-/* меню */
+/* меню и дропдаун «Услуги» */
 const dd=document.getElementById('dd');
 const ddb=dd.querySelector('button');
+const drop=dd.querySelector('.drop');
+function placeDrop(){
+  const r=ddb.getBoundingClientRect();
+  drop.style.left=Math.round(r.left)+'px';
+  drop.style.top=Math.round(r.bottom+8)+'px';
+  drop.style.minWidth=Math.min(320, innerWidth*0.92)+'px';
+}
 ddb.addEventListener('click',(e)=>{
-  e.stopPropagation(); // ← добавлено, чтобы клик не закрыл меню сразу
+  e.stopPropagation();
   dd.classList.toggle('open');
   ddb.setAttribute('aria-expanded', dd.classList.contains('open'));
+  if(dd.classList.contains('open')) placeDrop();
 });
 addEventListener('click',e=>{if(!dd.contains(e.target)) dd.classList.remove('open')});
+addEventListener('scroll',()=>{if(dd.classList.contains('open')) placeDrop()},{passive:true});
+addEventListener('resize',()=>{if(dd.classList.contains('open')) placeDrop()});
 
 /* активный пункт + прогресс */
 const sections=[...document.querySelectorAll('main > section')];
-const links=[...document.querySelectorAll('.menu a[href^="#"]')];
-const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
-  const id='#'+e.target.id;
-  links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===id));
-}})},{threshold:.6});
+const links=[...document.querySelectorAll('.nav-pills a[href^="#"]')];
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const id='#'+e.target.id;
+      links.forEach(a=>{
+        const on=a.getAttribute('href')===id;
+        a.classList.toggle('active',on);
+        a.toggleAttribute('aria-current',on);
+      });
+    }
+  });
+},{threshold:.6});
 sections.forEach(s=>io.observe(s));
 
 const progress=document.getElementById('progress');
-addEventListener('scroll',()=>{const m=document.documentElement.scrollHeight-innerHeight;
-  progress.style.transform=`scaleX(${Math.max(0,Math.min(1,scrollY/m))})`},{passive:true});
+addEventListener('scroll',()=>{
+  const m=document.documentElement.scrollHeight-innerHeight;
+  progress.style.transform=`scaleX(${Math.max(0,Math.min(1,scrollY/m))})`;
+},{passive:true});
 
-/* авто-снап */
-let snapT=null; 
-function snap(){const vh=innerHeight;let best=null,d=1e9;
-  for(const s of sections){
-    const t=Math.abs(s.getBoundingClientRect().top);
-    if(t<d){d=t;best=s}
-  } 
-  if(best&&d>vh*.08) best.scrollIntoView({behavior:'smooth',block:'start'})
+/* авто-снап: включаем только для мыши/тачпада, не для тачскрина */
+if (matchMedia('(pointer:fine)').matches){
+  let snapT=null;
+  function snap(){
+    const vh=innerHeight;let best=null,d=1e9;
+    for(const s of sections){
+      const t=Math.abs(s.getBoundingClientRect().top);
+      if(t<d){d=t;best=s}
+    }
+    if(best&&d>vh*.08) best.scrollIntoView({behavior:'smooth',block:'start'})
+  }
+  addEventListener('scroll',()=>{clearTimeout(snapT);snapT=setTimeout(snap,120)},{passive:true});
 }
-addEventListener('scroll',()=>{clearTimeout(snapT);snapT=setTimeout(snap,120)},{passive:true});
 
 /* стрелка вниз */
 const hint=document.getElementById('hint'); 
@@ -560,9 +590,11 @@ form?.addEventListener('submit',async e=>{
 
 /* графики (SVG тянется по width:100%) */
 const a=document.getElementById('a'), b=document.getElementById('b'), c=document.getElementById('c'), poly=document.getElementById('poly');
-function drawLine(){const vals=[+a.value,(a.value*0.6+b.value*0.4),+b.value,(b.value*0.6+c.value*0.4),+c.value,+c.value+10].slice(0,6);
-  const pts=vals.map((v,i)=>`${40+i*104},${200-(v/100)*140}`).join(' '); 
-  poly.setAttribute('points',pts)}
+function drawLine(){
+  const vals=[+a.value,(a.value*0.6+b.value*0.4),+b.value,(b.value*0.6+c.value*0.4),+c.value,+c.value+10].slice(0,6);
+  const pts=vals.map((v,i)=>`${40+i*104},${200-(v/100)*140}`).join(' ');
+  poly.setAttribute('points',pts)
+}
 [a,b,c].forEach(el=>el?.addEventListener('input',drawLine)); 
 drawLine();
 
